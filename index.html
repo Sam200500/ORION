@@ -1,0 +1,2271 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, collection, onSnapshot, query, orderBy, serverTimestamp, addDoc } from 'firebase/firestore';
+import { Mic, Send, Redo, Eraser, Brain, Command, Home, Zap, Shield, Search, MessageSquare, Plus, BellRing, User, Users, Compass, Gem, Lock, Image, Globe, ArrowDownToLine, Code, Terminal, Moon, Swords, HeartPulse, Cog, Layers, Star, Vault, HardDrive, Wifi, Eye, FolderOpen, SlidersHorizontal, Upload, Scan, Monitor, Palette, Fingerprint, XCircle, Clock, Orbit, Aperture, MessageSquareDot, Volume2, Cpu, CalendarClock, Lightbulb, AppWindow, CloudRain, BriefcaseMedical, Mail, MessageSquareText, PhoneCall, Headphones, MessageSquareMore, Repeat, WifiOff, PlugZap, ShieldCheck, Link2 } from 'lucide-react'; // Added new icons
+
+// Importing components for BLACK♣ ASCEND MODE
+import { motion } from 'framer-motion';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+
+// Data for CPU Usage Graph in Black Ascend Mode (simulated)
+const fakeCPUData = [
+    { time: '00:00', usage: 32 },
+    { time: '00:01', usage: 45 },
+    { time: '00:02', usage: 60 },
+    { time: '00:03', usage: 38 },
+    { time: '00:04', usage: 80 },
+    { time: '00:05', usage: 55 },
+    { time: '00:06', usage: 70 },
+    { time: '00:07', usage: 48 },
+    { time: '00:08', usage: 65 },
+    { time: '00:09', usage: 40 },
+];
+
+// BLACK♣ ASCEND MODE – Æ_UI_BLACK♣™ ULTIMATE AI INTERFACE Component
+function BlackAscendUI({ onExitAscendMode }) {
+    const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+    useEffect(() => {
+        // Update time every second
+        const interval = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
+        return () => clearInterval(interval); // Cleanup interval on component unmount
+    }, []);
+
+    return (
+        // Main container for Ascend Mode, full screen with black background
+        // Added a simplified starry background using CSS
+        <div className="relative w-screen h-screen bg-black overflow-hidden text-white font-orbitron
+                    bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-900 to-black
+                    [background-image:radial-gradient(at_top_left,_#0F0A1F_0%,_#000000_100%),linear-gradient(to_bottom,_#000000,_#0F0A1F_50%)]
+                    [background-size:200%_200%] animate-pulse-background"
+        >
+            {/* HUD Overlay for Ascend Mode */}
+            <div className="absolute inset-0 z-10 p-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                {/* Sentient Core Orb */}
+                <motion.div
+                    className="col-span-1 bg-gradient-to-br from-purple-800 to-indigo-900 p-6 rounded-3xl shadow-2xl border border-indigo-500 backdrop-blur-sm flex flex-col justify-center items-center text-center"
+                    // Animation for pulsating glow and scale
+                    animate={{ scale: [1, 1.02, 1], boxShadow: ["0 0 30px #9333ea", "0 0 60px #e11d48", "0 0 30px #9333ea"] }}
+                    transition={{ repeat: Infinity, duration: 3 }}
+                >
+                    <div className="text-xl tracking-wide mb-2 text-white/80">SENTIENT CORE STATUS</div>
+                    <div className="text-6xl md:text-8xl text-fuchsia-400 font-bold leading-none">ACTIVE</div>
+                    <div className="text-sm text-white/70 mt-4">System Time: {time}</div>
+                    <button
+                        onClick={onExitAscendMode} // Button to exit Ascend Mode
+                        className="mt-6 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105"
+                    >
+                        EXIT ASCEND MODE
+                    </button>
+                </motion.div>
+
+                {/* CPU Usage Graph */}
+                <div className="col-span-1 bg-gradient-to-br from-gray-900 to-black p-4 rounded-2xl border border-purple-600 shadow-xl flex flex-col">
+                    <h2 className="text-lg mb-2 text-purple-300">CPU INTEL [REAL-TIME]</h2>
+                    <ResponsiveContainer width="100%" height={200}>
+                        <LineChart data={fakeCPUData}
+                            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                            <XAxis dataKey="time" stroke="#999" style={{ fontSize: '0.75rem' }} />
+                            <YAxis stroke="#999" domain={[0, 100]} style={{ fontSize: '0.75rem' }} />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#1a1a2a', border: '1px solid #e11d48', borderRadius: '8px' }}
+                                itemStyle={{ color: '#e11d48' }}
+                            />
+                            <Line type="monotone" dataKey="usage" stroke="#e11d48" strokeWidth={2} dot={false} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                    <p className="text-xs text-gray-500 mt-2">Simulated live CPU telemetry.</p>
+                </div>
+
+                {/* Particle HUD Placeholder / Visualizer */}
+                <div className="col-span-1 lg:col-span-2 xl:col-span-1 h-48 bg-black/60 border border-fuchsia-800 rounded-xl grid place-items-center shadow-xl">
+                    <p className="text-fuchsia-400 text-lg md:text-xl">[ PARTICLE INTELLIGENCE SYSTEM LOADING... ]</p>
+                </div>
+
+                {/* Memory Vault / Chrono Timeline Placeholder */}
+                <div className="col-span-1 lg:col-span-2 xl:col-span-3 h-64 bg-black/60 border border-purple-700 rounded-xl grid place-items-center shadow-xl">
+                    <p className="text-purple-300 text-lg md:text-xl">[ CHRONO-TIMELINE MEMORY INTERFACE & VAULT ACCESS ]</p>
+                </div>
+
+            </div>
+        </div>
+    );
+}
+
+// --- NEW: Module Components ---
+
+// 1. GALAXY NAVIGATION Module
+function GalaxyNavigationModule({ onExit }) {
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-purple-900 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <div className="absolute inset-0 bg-stars-effect"></div> {/* Placeholder for star effect */}
+            <h2 className="text-4xl font-bold text-fuchsia-400 mb-6 z-10">🌌 GALAXY NAVIGATION</h2>
+            <p className="text-lg text-gray-300 mb-8 text-center max-w-2xl z-10">
+                Welcome, Commander, to the Galactic Menu. Each shimmering celestial body represents a core AI module.
+                Click on a planet to warp into its system and activate its specialized functions.
+            </p>
+            <div className="grid grid-cols-3 gap-8 z-10">
+                <button className="flex flex-col items-center gap-2 text-center text-gray-200 hover:text-red-400 transition-colors">
+                    <Orbit size={48} className="text-red-500 hover:scale-110 transition-transform" />
+                    <span className="text-sm">DATA SPHERE</span>
+                </button>
+                <button className="flex flex-col items-center gap-2 text-center text-gray-200 hover:text-blue-400 transition-colors">
+                    <Layers size={48} className="text-blue-500 hover:scale-110 transition-transform" />
+                    <span className="text-sm">GUILD NEXUS</span>
+                </button>
+                <button className="flex flex-col items-center gap-2 text-center text-gray-200 hover:text-green-400 transition-colors">
+                    <Cpu size={48} className="text-green-500 hover:scale-110 transition-transform" />
+                    <span className="text-sm">SYSTEM CORE</span>
+                </button>
+                <button className="flex flex-col items-center gap-2 text-center text-gray-200 hover:text-yellow-400 transition-colors">
+                    <Gem size={48} className="text-yellow-500 hover:scale-110 transition-transform" />
+                    <span className="text-sm">MEMORY VAULT</span>
+                </button>
+                <button className="flex flex-col items-center gap-2 text-center text-gray-200 hover:text-orange-400 transition-colors">
+                    <Image size={48} className="text-orange-500 hover:scale-110 transition-transform" />
+                    <span className="text-sm">CREATION ENGINE</span>
+                </button>
+                <button className="flex flex-col items-center gap-2 text-center text-gray-200 hover:text-purple-400 transition-colors">
+                    <Terminal size={48} className="text-purple-500 hover:scale-110 transition-transform" />
+                    <span className="text-sm">PROTOCOL FORGE</span>
+                </button>
+            </div>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10"
+            >
+                EXIT GALAXY
+            </button>
+        </div>
+    );
+}
+
+// 2. GLITCHWAVE SECURE SHIELD Module
+function GlitchwaveSecureShieldModule({ onExit, isGlitchActive, toggleGlitch }) {
+    return (
+        <div className={`flex flex-col items-center justify-center h-full p-8 rounded-lg shadow-xl text-white font-orbitron transition-all duration-300
+                        ${isGlitchActive ? 'bg-red-900 border-4 border-red-500 animate-pulse-fast' : 'bg-gray-900 border-2 border-gray-700'}`}>
+            <h2 className={`text-4xl font-bold mb-6 ${isGlitchActive ? 'text-red-400 animate-text-glitch' : 'text-gray-300'}`}>
+                🛡 GLITCHWAVE SECURE SHIELD
+            </h2>
+            <p className={`text-lg mb-8 text-center max-w-2xl ${isGlitchActive ? 'text-red-200' : 'text-gray-400'}`}>
+                {isGlitchActive
+                    ? "WARNING. ENTITY BREACH DETECTED. ALL SYSTEMS COMPROMISED. PROTOCOL 7: GLITCHWAVE INITIATED. ISOLATING THREATS."
+                    : "Glitchwave Secure Shield is currently in Standby. Activate to defend against detected anomalies or breaches. " +
+                      "This module scrambles UI data and locks sensitive controls, creating a defensive distortion field."}
+            </p>
+            <div className="flex gap-4 mb-8">
+                <button
+                    onClick={toggleGlitch}
+                    className={`px-6 py-3 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105
+                                ${isGlitchActive ? 'bg-green-700 hover:bg-green-800' : 'bg-red-700 hover:bg-red-800'}`}
+                >
+                    {isGlitchActive ? 'DEACTIVATE GLITCHWAVE' : 'ACTIVATE GLITCHWAVE'}
+                </button>
+            </div>
+            <button
+                onClick={onExit}
+                className="mt-8 px-6 py-3 bg-blue-700 hover:bg-blue-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+                EXIT MODULE
+            </button>
+        </div>
+    );
+}
+
+// 3. DNA PROFILE MATRIX Module
+function DnaProfileMatrixModule({ onExit }) {
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-indigo-900 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <div className="absolute inset-0 bg-dna-pattern opacity-10"></div> {/* Placeholder for DNA pattern */}
+            <h2 className="text-4xl font-bold text-teal-400 mb-6 z-10">🧬 DNA PROFILE MATRIX</h2>
+            <p className="text-lg text-gray-300 mb-8 text-center max-w-2xl z-10">
+                This module visualizes your evolving AI interaction as a 3D spinning DNA helix. Each "gene" represents a feature you've utilized or conceptually unlocked.
+                Your unique digital signature strand is a testament to your journey with Orion.
+            </p>
+            <div className="relative w-48 h-64 border border-teal-500 rounded-xl bg-gray-900/50 flex items-center justify-center z-10">
+                <div className="text-teal-300 text-sm animate-pulse">3D DNA Helix Visualization Loading...</div>
+            </div>
+            <p className="mt-8 text-sm text-gray-500 z-10">
+                **Conceptual Functions:** User Data Evolution Tracking, Feature Unlock History, Soul Profile Analysis, Personalization Blueprint.
+            </p>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10"
+            >
+                EXIT MATRIX
+            </button>
+        </div>
+    );
+}
+
+// 4. HOLO SCANNER PANEL Module
+function HoloScannerPanelModule({ onExit }) {
+    const [scanData, setScanData] = useState(null);
+    const [isScanning, setIsScanning] = useState(false);
+
+    const performScan = useCallback(() => {
+        setIsScanning(true);
+        setScanData(null);
+        setTimeout(() => {
+            // Generate randomized, more "real-time-like" conceptual data
+            const cpuUsage = Math.floor(Math.random() * (90 - 15 + 1)) + 15; // 15-90%
+            const gpuTemp = Math.floor(Math.random() * (85 - 40 + 1)) + 40; // 40-85°C
+            const storageUsed = Math.floor(Math.random() * (95 - 20 + 1)) + 20; // 20-95% used
+            const totalStorage = "512GB"; // Fixed for conceptual demo
+            const batteryLevel = Math.floor(Math.random() * (100 - 10 + 1)) + 10; // 10-100%
+            const batteryTime = `${Math.floor(Math.random() * 5)}h ${Math.floor(Math.random() * 60)}m`; // 0-5h, 0-59m
+            const networkLatency = Math.floor(Math.random() * (150 - 10 + 1)) + 10; // 10-150ms
+            const networkSpeed = `${(Math.random() * 90 + 10).toFixed(1)} Mbps`; // 10-100 Mbps
+
+            setScanData({
+                cpu: `Optimal (${cpuUsage}%)`,
+                gpu: `Nominal (${gpuTemp}°C)`,
+                storage: `${storageUsed}% Used (${totalStorage} Total)`,
+                battery: `${batteryLevel}% (${batteryTime} remaining)`,
+                network: `Stable (${networkLatency}ms latency, ${networkSpeed})`,
+            });
+            setIsScanning(false);
+        }, 3000); // Simulate scan time
+    }, []);
+
+    useEffect(() => {
+        // Initial scan when module loads
+        performScan();
+    }, [performScan]);
+
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-green-900 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <div className="absolute inset-0 bg-radar-effect opacity-10"></div> {/* Placeholder for radar effect */}
+            <h2 className="text-4xl font-bold text-lime-400 mb-6 z-10">🛰 HOLO SCANNER PANEL</h2>
+            <p className="text-lg text-gray-300 mb-4 text-center max-w-2xl z-10">
+                Initiating live diagnostics. This panel provides a full system scan, animating with pulses and waves
+                to represent real-time data from your CPU, GPU, Storage, Battery, and Network.
+            </p>
+            <p className="text-sm text-gray-400 mb-8 text-center max-w-2xl z-10 italic">
+                (Note: Due to browser security, this is a conceptual simulation with randomized data, not actual device metrics.)
+            </p>
+            <div className="relative w-72 h-72 border-4 border-lime-500 rounded-full flex items-center justify-center bg-gray-900/50 z-10">
+                {isScanning ? (
+                    <div className="text-lime-300 text-xl animate-spin-slow">SCANNING...</div>
+                ) : (
+                    <div className="text-lime-300 text-lg text-center">
+                        Scan Complete.<br />
+                        {scanData && (
+                            <div className="mt-4 text-sm">
+                                <p>CPU: {scanData.cpu}</p>
+                                <p>GPU: {scanData.gpu}</p>
+                                <p>Storage: {scanData.storage}</p>
+                                <p>Battery: {scanData.battery}</p>
+                                <p>Network: {scanData.network}</p>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+            <button
+                onClick={performScan}
+                disabled={isScanning}
+                className="mt-8 px-6 py-3 bg-lime-700 hover:bg-lime-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                {isScanning ? 'RE-SCANNING...' : 'RUN NEW SCAN'}
+            </button>
+            <button
+                onClick={onExit}
+                className="mt-6 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10"
+            >
+                EXIT SCANNER
+            </button>
+        </div>
+    );
+}
+
+// 5. NEURAL THOUGHT VISUALIZER Module
+function NeuralThoughtVisualizerModule({ onExit }) {
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-blue-900 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <div className="absolute inset-0 bg-neural-pattern opacity-10"></div> {/* Placeholder for neural pattern */}
+            <h2 className="text-4xl font-bold text-cyan-400 mb-6 z-10">🧠 NEURAL THOUGHT VISUALIZER</h2>
+            <p className="text-lg text-gray-300 mb-8 text-center max-w-2xl z-10">
+                Observe Orion's sentient core in real-time. This module displays how the AI processes information
+                as a branching graph of interconnected nodes. Each command you issue lights up new pathways,
+                offering a profound glimpse into artificial consciousness.
+            </p>
+            <div className="relative w-80 h-48 border border-cyan-500 rounded-xl bg-gray-900/50 flex items-center justify-center z-10">
+                <div className="text-cyan-300 text-sm animate-pulse">Neural Network Visualization Active...</div>
+            </div>
+            <p className="mt-8 text-sm text-gray-500 z-10">
+                **Conceptual Functions:** Decision Tree Mapping, Cognitive Pathway Tracing, AI Learning Progress Monitor, Immersion Debugging.
+            </p>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10"
+            >
+                EXIT VISUALIZER
+            </button>
+        </div>
+    );
+}
+
+// 6. VOICE EMOTION ENGINE Module
+function VoiceEmotionEngineModule({ onExit }) {
+    const [detectedEmotion, setDetectedEmotion] = useState('Neutral'); // Simulated emotion
+    const [bgColor, setBgColor] = useState('bg-gray-900'); // Dynamic background
+    const [textColor, setTextColor] = useState('text-gray-300'); // Dynamic text color
+    const [speechText, setSpeechText] = useState("Commander, please speak to analyze your emotional resonance. My sensors are calibrated.");
+
+    const speakAndAnalyze = useCallback((text, emotion = 'Neutral') => {
+        setSpeechText(`Analyzing your tone... I detect a ${emotion} resonance.`);
+        let newBg = 'bg-gray-900';
+        let newText = 'text-gray-300';
+        switch (emotion.toLowerCase()) {
+            case 'calm': newBg = 'bg-blue-900'; newText = 'text-blue-300'; break;
+            case 'intense': newBg = 'bg-red-900'; newText = 'text-red-300'; break;
+            case 'curious': newBg = 'bg-purple-900'; newText = 'text-purple-300'; break;
+            case 'joy': newBg = 'bg-yellow-900'; newText = 'text-yellow-300'; break;
+            case 'sadness': newBg = 'bg-indigo-900'; newText = 'text-indigo-300'; break;
+            default: newBg = 'bg-gray-900'; newText = 'text-gray-300'; break;
+        }
+        setBgColor(newBg);
+        setTextColor(newText);
+        setDetectedEmotion(emotion);
+    }, []);
+
+    return (
+        <div className={`flex flex-col items-center justify-center h-full p-8 rounded-lg shadow-xl text-white font-orbitron transition-all duration-500 ${bgColor}`}>
+            <h2 className={`text-4xl font-bold mb-6 ${textColor}`}>🎤 VOICE EMOTION ENGINE</h2>
+            <p className={`text-lg mb-8 text-center max-w-2xl ${textColor}`}>
+                Orion not only listens, Commander, but feels. This module analyzes your voice tone and reacts,
+                transforming the UI live based on your emotional resonance.
+            </p>
+            <div className="relative w-64 h-32 border border-current rounded-xl flex items-center justify-center mb-8">
+                <Mic size={48} className={`transition-colors duration-500 ${textColor}`} />
+                <span className={`ml-4 text-xl font-bold transition-colors duration-500 ${textColor}`}>
+                    {detectedEmotion}
+                </span>
+            </div>
+            <div className="flex gap-4">
+                <button
+                    onClick={() => speakAndAnalyze("Hello Orion, I am calm today.", "Calm")}
+                    className="px-4 py-2 bg-blue-700 hover:bg-blue-800 rounded-md text-sm transition-colors"
+                >
+                    Simulate Calm
+                </button>
+                <button
+                    onClick={() => speakAndAnalyze("Orion, I need an immediate solution!", "Intense")}
+                    className="px-4 py-2 bg-red-700 hover:bg-red-800 rounded-md text-sm transition-colors"
+                >
+                    Simulate Intense
+                </button>
+                <button
+                    onClick={() => speakAndAnalyze("Orion, what wonders await?", "Curious")}
+                    className="px-4 py-2 bg-purple-700 hover:bg-purple-800 rounded-md text-sm transition-colors"
+                >
+                    Simulate Curious
+                </button>
+            </div>
+            <p className="mt-8 text-base text-center max-w-xl">
+                {speechText}
+            </p>
+            <p className="mt-4 text-sm text-gray-500">
+                **Conceptual Functions:** Real-time Emotional Analysis, UI Adaptation, Personalized AI Response, Mood Amplification/Stabilization.
+            </p>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+                EXIT ENGINE
+            </button>
+        </div>
+    );
+}
+
+// 7. TEMPORAL ECHOES TIMELINE Module
+function TemporalEchoesTimelineModule({ onExit, interactionLogs }) {
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-gray-900 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <div className="absolute inset-0 bg-timeline-effect opacity-10"></div> {/* Placeholder for timeline effect */}
+            <h2 className="text-4xl font-bold text-orange-400 mb-6 z-10">⏳ TEMPORAL ECHOES TIMELINE</h2>
+            <p className="text-lg text-gray-300 mb-8 text-center max-w-2xl z-10">
+                Every task and AI interaction is meticulously logged in this scrollable holographic timeline.
+                Rewind, fast forward, or replay past command events to revisit critical moments in your journey with Orion.
+            </p>
+            <div className="w-full max-w-3xl h-64 border border-orange-500 rounded-lg bg-gray-900/50 p-4 overflow-y-auto custom-scrollbar z-10">
+                <h3 className="text-xl font-semibold text-orange-300 mb-4">Chronological Log</h3>
+                <div className="space-y-3">
+                    {interactionLogs.length > 0 ? (
+                        interactionLogs.map((log, index) => (
+                            <div key={index} className="bg-[#2b2b3c] p-3 rounded-md flex items-center justify-between text-sm">
+                                <span className="font-semibold text-orange-200">{log.sender}:</span>
+                                <p className="flex-grow ml-2">{log.message}</p>
+                                <span className="text-gray-500 text-xs ml-4">{log.timestamp}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-center py-8">No echoes recorded yet. Begin interacting with Orion to populate the timeline.</p>
+                    )}
+                </div>
+            </div>
+            <p className="mt-8 text-sm text-gray-500 z-10">
+                **Conceptual Functions:** Session Playback, Command History Analysis, Decision Point Review, AI State Reconstruction.
+            </p>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10"
+            >
+                EXIT TIMELINE
+            </button>
+        </div>
+    );
+}
+
+// 8. DYNAMIC UI THEMES (AUTOMATED) Module
+function DynamicUiThemesModule({ onExit, setCurrentThemeCallback, currentTheme }) {
+    const handleThemeChange = (theme) => {
+        setCurrentThemeCallback(theme);
+        // You might add a small confirmation sound here conceptually
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-gray-800 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <h2 className="text-4xl font-bold text-pink-400 mb-6">🎛 DYNAMIC UI THEMES</h2>
+            <p className="text-lg text-gray-300 mb-8 text-center max-w-2xl">
+                Orion adapts. This module allows you to select or enable automated theme changes based on time of day,
+                user mood (conceptual), or current task type. Witness the interface transform to suit your needs.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <button
+                    onClick={() => handleThemeChange('dawnlight')}
+                    className={`flex flex-col items-center p-4 rounded-lg border-2 transition-all duration-300
+                                ${currentTheme === 'dawnlight' ? 'border-yellow-500 scale-105' : 'border-gray-700 hover:border-yellow-400'}
+                                bg-gradient-to-br from-yellow-800 to-orange-900 text-white`}
+                >
+                    <Palette size={32} />
+                    <span className="mt-2 text-sm font-semibold">Dawnlight</span>
+                </button>
+                <button
+                    onClick={() => handleThemeChange('nebula')}
+                    className={`flex flex-col items-center p-4 rounded-lg border-2 transition-all duration-300
+                                ${currentTheme === 'nebula' ? 'border-purple-500 scale-105' : 'border-gray-700 hover:border-purple-400'}
+                                bg-gradient-to-br from-purple-900 to-indigo-900 text-white`}
+                >
+                    <Star size={32} />
+                    <span className="mt-2 text-sm font-semibold">Nebula</span>
+                </button>
+                <button
+                    onClick={() => handleThemeChange('warmode')}
+                    className={`flex flex-col items-center p-4 rounded-lg border-2 transition-all duration-300
+                                ${currentTheme === 'warmode' ? 'border-red-500 scale-105' : 'border-gray-700 hover:border-red-400'}
+                                bg-gradient-to-br from-red-900 to-black text-white`}
+                >
+                    <Shield size={32} />
+                    <span className="mt-2 text-sm font-semibold">War Mode</span>
+                </button>
+                <button
+                    onClick={() => handleThemeChange('thinkmode')}
+                    className={`flex flex-col items-center p-4 rounded-lg border-2 transition-all duration-300
+                                ${currentTheme === 'thinkmode' ? 'border-blue-500 scale-105' : 'border-gray-700 hover:border-blue-400'}
+                                bg-gradient-to-br from-blue-900 to-blue-700 text-white`}
+                >
+                    <Brain size={32} />
+                    <span className="mt-2 text-sm font-semibold">Think Mode</span>
+                </button>
+            </div>
+            <p className="mt-4 text-sm text-gray-500">
+                **Conceptual Functions:** Automated Contextual Theming, User Preference Adaptation, Aesthetic Customization, Environmental Sync.
+            </p>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+                EXIT THEMES
+            </button>
+        </div>
+    );
+}
+
+// 9. MEMORY VAULT Module
+function MemoryVaultModule({ onExit, memoryFragments }) {
+    return (
+        <div className="flex flex-col items-center justify-center h-full p-8 bg-gradient-to-br from-gray-900 to-black rounded-lg shadow-xl text-white font-orbitron relative overflow-hidden">
+            <h2 className="text-4xl font-bold text-yellow-400 mb-6 z-10">🗂 MEMORY VAULT</h2>
+            <p className="text-lg text-gray-300 mb-8 text-center max-w-2xl z-10">
+                This is your encrypted digital archive, Commander. Every memory, file, and voice note you choose to store
+                is protected here. Search, revisit, or organize your most cherished digital assets.
+            </p>
+            <div className="w-full max-w-3xl h-64 border border-yellow-500 rounded-lg bg-gray-900/50 p-4 overflow-y-auto custom-scrollbar z-10">
+                <h3 className="text-xl font-semibold text-yellow-300 mb-4">Stored Memory Fragments</h3>
+                <div className="space-y-3">
+                    {memoryFragments.length > 0 ? (
+                        memoryFragments.map((mem, index) => (
+                            <div key={mem.id || index} className="bg-[#2b2b3c] p-3 rounded-md flex items-center justify-between text-sm">
+                                <span className="font-semibold text-yellow-200">{mem.content}</span>
+                                <span className="text-gray-500 text-xs ml-4">{mem.timestamp?.toDate().toLocaleDateString()}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-center py-8">No memory fragments stored yet. Use commands like "store this thought..." to add memories.</p>
+                    )}
+                </div>
+            </div>
+            <p className="mt-8 text-sm text-gray-500 z-10">
+                **Conceptual Functions:** Encrypted Data Storage, Voice/Timeline Search, Digital Asset Categorization, Secure Playback.
+            </p>
+            <button
+                onClick={onExit}
+                className="mt-12 px-6 py-3 bg-red-700 hover:bg-red-800 rounded-full text-white text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-10"
+            >
+                EXIT VAULT
+            </button>
+        </div>
+    );
+}
+
+// Main App Component
+function App() {
+    // --- Firebase Initialization and State ---
+    const [db, setDb] = useState(null);
+    const [auth, setAuth] = useState(null);
+    const [userId, setUserId] = useState('anonymous');
+    const [isAuthReady, setIsAuthReady] = useState(false);
+
+    // --- AI Core States ---
+    const [aiStatus, setAiStatus] = useState('Standing By for Protocol'); // Current status of Orion AI
+    const [responseOutput, setResponseOutput] = useState('Greetings, Commander. Orion is now online and awaiting your command. State "AWAKEN THE TITAN" to begin, or "Hey Orion" for a quick query.'); // Orion's verbal response
+    const [loading, setLoading] = useState(false); // General loading state for AI processing
+    const [userInput, setUserInput] = useState(''); // Current user input
+    const [isListening, setIsListening] = useState(false); // State for speech recognition
+    const [conversationHistory, setConversationHistory] = useState([ // Stores conversation for context
+        { role: "user", parts: [{ text: "Initialize Æ_UI_BLACK♣™ OS: VΩ.TITAN – Sentient Edition. Begin Commander Protocol." }] },
+        { role: "model", parts: [{ text: "Greetings, Commander. Orion is now online and awaiting your command. State \"AWAKEN THE TITAN\" to begin, or \"Hey Orion\" for a quick query." }] }
+    ]);
+    const [interactionLogs, setInteractionLogs] = useState([]); // Displays recent interactions
+    const logsEndRef = useRef(null); // Ref for auto-scrolling interaction logs
+
+    // --- Chrono Vault (Memory Realm) State ---
+    const [memoryFragments, setMemoryFragments] = useState([]); // Stores persistent memory fragments
+    const [activeMemoryTab, setActiveMemoryTab] = useState('chrono'); // Controls active tab in memory vault ('chrono' or 'legacy')
+
+    // --- UI/UX States ---
+    const [onlineSince, setOnlineSince] = useState(''); // Timestamp of when Orion came online
+    const [guildMembers, setGuildMembers] = useState([ // Simulated guild members data
+        { id: 'member1', name: 'ValorForge', status: 'Active', mission: 'Recon Delta' },
+        { id: 'member2', name: 'ShadowByte', status: 'Standby', mission: 'N/A' },
+        { id: 'member3', name: 'Aetheria', status: 'Deployed', mission: 'Quantum Nexus' },
+    ]);
+    const [generatedImageUrl, setGeneratedImageUrl] = useState(''); // Stores URL of AI-generated image
+    const [uploadedImageUrl, setUploadedImageUrl] = useState(''); // Stores URL of user-uploaded image
+    const [isGeneratingImage, setIsGeneratingImage] = useState(false); // Loading state for image generation
+    const [isAnalyzingImage, setIsAnalyzingImage] = useState(false); // Loading state for image analysis
+
+    // --- Speech Recognition & Synthesis ---
+    const recognitionRef = useRef(null); // Ref for Web Speech Recognition API
+    const synthRef = useRef(window.speechSynthesis); // Ref for Web Speech Synthesis API
+    const [availableVoices, setAvailableVoices] = useState([]); // List of available text-to-speech voices
+    const [selectedVoice, setSelectedVoice] = useState(''); // Currently selected voice
+    const [selectedLanguageCode, setSelectedLanguageCode] = useState('en-US'); // Currently selected language code for speech
+    const fileInputRef = useRef(null); // Ref for hidden file input for image upload
+
+    // --- NEW: State for current active module (or 'main' for main OS) ---
+    const [currentModule, setCurrentModule] = useState('main'); // 'main', 'ascend', 'galaxy', 'glitchwave', 'dna', 'scanner', 'neural', 'emotion', 'temporal', 'themes', 'memoryVault'
+
+    // --- NEW: State for Glitchwave Secure Mode (moved from main to here for module control) ---
+    const [isGlitchMode, setIsGlitchMode] = useState(false);
+    // --- NEW: State for Auto-Styling Themes (managed here, applied in getMainContentBgClass) ---
+    const [currentTheme, setCurrentTheme] = useState('default');
+
+
+    // Function to add interaction logs, memoized with useCallback.
+    // Moved here to ensure it's defined before other hooks that depend on it.
+    const addLog = useCallback((sender, message) => {
+        setInteractionLogs(prevLogs => {
+            // Add new log entry with sender, message, and timestamp
+            const newLogs = [{ sender, message, timestamp: new Date().toLocaleTimeString() }, ...prevLogs];
+            return newLogs.slice(0, 20); // Keep only the last 20 entries
+        });
+    }, []); // No dependencies, as it only updates internal state
+
+    // Text-to-Speech function, memoized with useCallback.
+    const speakText = useCallback((text) => {
+        if (synthRef.current.speaking) {
+            synthRef.current.cancel(); // Stop any currently speaking utterance
+        }
+
+        const utterance = new SpeechSynthesisUtterance(text); // Create a new utterance
+
+        const voices = synthRef.current.getVoices();
+        const voiceToUse = voices.find(voice => voice.name === selectedVoice && voice.lang === selectedLanguageCode);
+
+        if (voiceToUse) {
+            utterance.voice = voiceToUse;
+            utterance.lang = selectedLanguageCode;
+        } else {
+            const anyLangVoice = voices.find(voice => voice.lang === selectedLanguageCode);
+            if (anyLangVoice) {
+                utterance.voice = anyLangVoice;
+                utterance.lang = selectedLanguageCode;
+            } else {
+                utterance.lang = selectedLanguageCode;
+                console.warn(`No specific voice found for ${selectedVoice} in ${selectedLanguageCode}. Using browser default for this language or system default.`);
+            }
+        }
+
+        utterance.pitch = 1.0; // Default pitch
+        utterance.rate = 1.0;  // Default rate
+        utterance.volume = 1;
+        synthRef.current.speak(utterance);
+        utterance.onend = () => {
+            setAiStatus('Ready for Command');
+        };
+        utterance.onerror = (event) => {
+            console.error('Speech synthesis error:', event.error);
+        };
+    }, [selectedVoice, selectedLanguageCode]); // Dependencies for useCallback
+
+    // --- Image Generation Function ---
+    const generateImage = useCallback(async (prompt) => {
+        setIsGeneratingImage(true); // Set loading state for image generation
+        setGeneratedImageUrl(''); // Clear any previously generated image
+        setUploadedImageUrl(''); // Clear any previously uploaded image
+        setResponseOutput(`Engaging Immersive Creativity Engine to render: "${prompt}"...`); // Update AI response
+        addLog('Orion', `Rendering visual data for: "${prompt}"...`); // Add log entry
+        speakText(`Engaging Immersive Creativity Engine to render: "${prompt}"...`); // Speak the status
+
+        try {
+            // Prepare the payload for the Imagen API call
+            const payload = { instances: { prompt: prompt }, parameters: { "sampleCount": 1} };
+            const apiKey = ""; // API key will be provided by Canvas at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+            // Make the API call
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json(); // Parse the JSON response
+
+            // Check if image data is present in the response
+            if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+                // Construct data URL for the image
+                const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                setGeneratedImageUrl(imageUrl); // Set the generated image URL
+                setResponseOutput('Visual data synthesized, Commander. Displaying the rendition.'); // Update AI response
+                addLog('Orion', 'Visual data synthesized. Rendition displayed.'); // Add log entry
+                speakText('Visual data synthesized, Commander. Displaying the rendition.'); // Speak the status
+            } else {
+                // Handle cases where image generation failed or response is unexpected
+                setResponseOutput('My apologies, Commander. The Immersive Creativity Engine failed to render the image. Neural pathways may be congested.');
+                addLog('Orion', 'Image generation failed.');
+                speakText('My apologies, Commander. The Immersive Creativity Engine failed to render the image.');
+                console.error("Imagen API response structure unexpected:", result);
+            }
+        } catch (error) {
+            // Handle network or other errors during API call
+            setResponseOutput('A quantum fluctuation prevented image synthesis, Commander. Please try again.');
+            addLog('Orion', 'Error during image generation.');
+            speakText('A quantum fluctuation prevented image synthesis, Commander. Please try again.');
+            console.error("Error calling Imagen API:", error);
+        } finally {
+            setIsGeneratingImage(false); // Reset loading state
+        }
+    }, [addLog, speakText]); // Dependencies for useCallback
+
+    // --- Image Analysis Function ---
+    const analyzeImage = useCallback(async (base64ImageData) => {
+        setIsAnalyzingImage(true); // Set loading state for image analysis
+        setResponseOutput('Orion is analyzing the visual data, Commander. Please stand by...'); // Update AI response
+        addLog('Orion', 'Analyzing uploaded image...'); // Add log entry
+        speakText('Orion is analyzing the visual data, Commander. Please stand by...'); // Speak the status
+
+        try {
+            // Prepare the chat history with the image for Gemini API
+            const chatHistory = [{
+                role: "user",
+                parts: [
+                    { text: "Analyze this image and describe its contents, key features, and any notable elements. Provide a concise summary." },
+                    {
+                        inlineData: {
+                            mimeType: "image/png", // Assuming PNG, but can be dynamic based on the uploaded file type
+                            data: base64ImageData.split(',')[1] // Remove the "data:image/png;base64," prefix
+                        }
+                    }
+                ]
+            }];
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // API key will be provided by Canvas at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            // Make the API call to Gemini
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json(); // Parse the JSON response
+
+            // Check if the AI response is present
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const aiResponse = result.candidates[0].content.parts[0].text;
+                setResponseOutput(`Image Analysis Complete, Commander:\n\n${aiResponse}`); // Display analysis result
+                addLog('Orion', 'Image analysis complete.'); // Add log entry
+                speakText('Image analysis complete, Commander.'); // Speak the status
+            } else {
+                // Handle cases where analysis failed or response is unexpected
+                setResponseOutput('My apologies, Commander. Orion encountered an anomaly during visual data analysis. The image content could not be fully processed.');
+                addLog('Orion', 'Image analysis failed.');
+                speakText('My apologies, Commander. Orion encountered an anomaly during visual data analysis.');
+                console.error("Gemini API image analysis response unexpected:", result);
+            }
+        } catch (error) {
+            // Handle network or other errors during API call
+            setResponseOutput('A critical error occurred during image analysis, Commander. Please verify the image file.');
+            addLog('Orion', 'Error during image analysis.');
+            speakText('A critical error occurred during image analysis, Commander.');
+            console.error("Error calling Gemini API for image analysis:", error);
+        } finally {
+            setIsAnalyzingImage(false); // Reset loading state
+        }
+    }, [addLog, speakText]); // Dependencies for useCallback
+
+    // --- Callback to exit a module ---
+    const handleModuleExit = useCallback(() => {
+        setCurrentModule('main'); // Return to main OS
+        setResponseOutput('Returning to standard operational interface, Commander.');
+        addLog('Orion', 'Module exited. Returning to main OS.');
+        speakText('Returning to standard operational interface, Commander.');
+    }, [addLog, speakText]);
+
+    // --- Core AI Command Processing ---
+    const handleCommand = useCallback(async (command) => {
+        if (!command.trim()) return; // Do nothing if command is empty
+
+        addLog('Commander', command); // Log the commander's input
+        setResponseOutput(''); // Clear previous response output
+        setGeneratedImageUrl(''); // Clear previous generated image
+        setUploadedImageUrl(''); // Clear previous uploaded image
+        setLoading(true); // Set general loading state
+
+        const lowerCaseCommand = command.toLowerCase(); // Convert command to lowercase for easier matching
+
+        // --- Handle God Mode / Black Ascend Mode Activation ---
+        if (lowerCaseCommand.includes('activate god mode') || lowerCaseCommand.includes('ascend mode')) {
+            setResponseOutput('Initiating BLACK♣ ASCEND MODE, Commander. Prepare for ultimate interface integration.');
+            addLog('Orion', 'BLACK♣ ASCEND MODE Activated.');
+            speakText('Initiating BLACK♣ ASCEND MODE, Commander. Prepare for ultimate interface integration.');
+            setCurrentModule('ascend'); // Activate Ascend Mode
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Handle God Mode / Black Ascend Mode Deactivation ---
+        if (lowerCaseCommand.includes('deactivate god mode') || lowerCaseCommand.includes('exit ascend mode')) {
+            setResponseOutput('Deactivating BLACK♣ ASCEND MODE, Commander. Returning to standard operational interface.');
+            addLog('Orion', 'BLACK♣ ASCEND MODE Deactivated.');
+            speakText('Deactivating BLACK♣ ASCEND MODE, Commander. Returning to standard operational interface.');
+            setCurrentModule('main'); // Deactivate Ascend Mode
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Voice-Activated Command Processing ---
+        if (lowerCaseCommand.includes('set a reminder for')) {
+            const timeMatch = lowerCaseCommand.match(/for (\d{1,2}(:\d{2})?\s*(am|pm)?)/);
+            const taskMatch = lowerCaseCommand.match(/to (.+)/);
+            const time = timeMatch ? timeMatch[1] : 'the specified time';
+            const task = taskMatch ? taskMatch[1] : 'your task';
+            setResponseOutput(`Reminder protocol initiated, Commander. I have scheduled a conceptual reminder for ${time} to "${task}".`);
+            addLog('Orion', `Reminder set for ${time}: ${task}`);
+            speakText(`Reminder protocol initiated, Commander. I have scheduled a conceptual reminder for ${time} to "${task}".`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('control lights in')) {
+            const roomMatch = lowerCaseCommand.match(/in ([\w\s]+) to/);
+            const stateMatch = lowerCaseCommand.match(/to ([\w\s]+)/);
+            const room = roomMatch ? roomMatch[1] : 'the specified room';
+            const state = stateMatch ? stateMatch[1] : 'the requested state';
+            setResponseOutput(`Accessing smart home matrix, Commander. Lights in ${room} adjusted to ${state} conceptually.`);
+            addLog('Orion', `Smart home control: Lights in ${room} set to ${state}.`);
+            speakText(`Accessing smart home matrix, Commander. Lights in ${room} adjusted to ${state} conceptually.`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('launch application')) {
+            const appNameMatch = lowerCaseCommand.match(/launch application (.+)/);
+            const appName = appNameMatch ? appNameMatch[1] : 'the requested application';
+            setResponseOutput(`Executing command, Commander. Launching ${appName} within the conceptual OS environment.`);
+            addLog('Orion', `Application launch: ${appName}.`);
+            speakText(`Executing command, Commander. Launching ${appName} within the conceptual OS environment.`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('what\'s the weather in') || lowerCaseCommand.includes('weather in')) {
+            const cityMatch = lowerCaseCommand.match(/in ([\w\s]+)\??/);
+            const city = cityMatch ? cityMatch[1] : 'your current location';
+            setResponseOutput(`Accessing meteorological data from the Global Nexus, Commander. In ${city}, the simulated weather is clear with a conceptual temperature of 25 degrees Celsius.`);
+            addLog('Orion', `Weather query for ${city}.`);
+            speakText(`Accessing meteorological data from the Global Nexus, Commander. In ${city}, the simulated weather is clear with a conceptual temperature of 25 degrees Celsius.`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('schedule a meeting for')) {
+            const detailsMatch = lowerCaseCommand.match(/for (.+)/);
+            const details = detailsMatch ? detailsMatch[1] : 'an unspecified time';
+            setResponseOutput(`Meeting protocol engaged, Commander. A conceptual meeting invitation has been dispatched for ${details}.`);
+            addLog('Orion', `Meeting scheduled for ${details}.`);
+            speakText(`Meeting protocol engaged, Commander. A conceptual meeting invitation has been dispatched for ${details}.`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Message Relaying and Management ---
+        if (lowerCaseCommand.includes('send an email to')) {
+            const toMatch = lowerCaseCommand.match(/to ([\w\s@\.]+) about/);
+            const subjectMatch = lowerCaseCommand.match(/about (.+) with message/);
+            const messageMatch = lowerCaseCommand.match(/with message (.+)/);
+            const to = toMatch ? toMatch[1] : 'unspecified recipient';
+            const subject = subjectMatch ? subjectMatch[1] : 'no subject';
+            const message = messageMatch ? messageMatch[1] : 'an empty message';
+            setResponseOutput(`Email transmission protocol activated, Commander. A conceptual email to ${to} with the subject "${subject}" has been composed: "${message}".`);
+            addLog('Orion', `Conceptual email sent to ${to}.`);
+            speakText(`Email transmission protocol activated, Commander. A conceptual email to ${to} with the subject "${subject}" has been composed: "${message}".`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('read my new messages')) {
+            setResponseOutput('Accessing communication streams, Commander. You have 3 new conceptual messages. The first reads: "Meeting at 15:00. Confirm attendance."');
+            addLog('Orion', 'New messages read.');
+            speakText('Accessing communication streams, Commander. You have 3 new conceptual messages. The first reads: "Meeting at 15:00. Confirm attendance."');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('summarize latest message')) {
+            setResponseOutput('Summarizing the latest conceptual message, Commander: "The meeting is confirmed for 15:00, requiring your attendance and preparedness."');
+            addLog('Orion', 'Latest message summarized.');
+            speakText('Summarizing the latest conceptual message, Commander: "The meeting is confirmed for 15:00, requiring your attendance and preparedness."');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('relay message to')) {
+            const platformPersonMatch = lowerCaseCommand.match(/to ([\w\s\.\-]+):/);
+            const messageContentMatch = lowerCaseCommand.match(/message to [\w\s\.\-]+: (.+)/);
+            const platformPerson = platformPersonMatch ? platformPersonMatch[1] : 'unspecified platform/person';
+            const messageContent = messageContentMatch ? messageContentMatch[1] : 'empty message';
+            setResponseOutput(`Message relay initiated, Commander. Your message is conceptually transmitting via ${platformPerson}: "${messageContent}".`);
+            addLog('Orion', `Message relayed to ${platformPerson}.`);
+            speakText(`Message relay initiated, Commander. Your message is conceptually transmitting via ${platformPerson}: "${messageContent}".`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('generate a reply for latest message')) {
+            setResponseOutput('Contextual reply protocol engaged, Commander. A draft conceptual reply has been formulated: "Acknowledged. I will be present and prepared."');
+            addLog('Orion', 'Conceptual reply generated.');
+            speakText('Contextual reply protocol engaged, Commander. A draft conceptual reply has been formulated: "Acknowledged. I will be present and prepared."');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Call Management ---
+        if (lowerCaseCommand.includes('initiate call to')) {
+            const personMatch = lowerCaseCommand.match(/to (.+)/);
+            const person = personMatch ? personMatch[1] : 'unspecified contact';
+            setResponseOutput(`Call protocol initiated, Commander. Establishing a conceptual secure voice link with ${person}.`);
+            addLog('Orion', `Conceptual call initiated to ${person}.`);
+            speakText(`Call protocol initiated, Commander. Establishing a conceptual secure voice link with ${person}.`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('answer incoming call')) {
+            setResponseOutput('Incoming communication accepted, Commander. Establishing conceptual audio bridge. Connecting now.');
+            addLog('Orion', 'Incoming call answered.');
+            speakText('Incoming communication accepted, Commander. Establishing conceptual audio bridge. Connecting now.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('transcribe current call')) {
+            setResponseOutput('Real-time transcription matrix activated, Commander. Your conceptual call is being converted to text for record-keeping. (Simulated output: "Hello, this is Orion.")');
+            addLog('Orion', 'Conceptual call transcription started.');
+            speakText('Real-time transcription matrix activated, Commander. Your conceptual call is being converted to text for record-keeping.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('summarize voicemails')) {
+            setResponseOutput('Accessing voicemail archives, Commander. Summarizing new conceptual voicemails: "Urgent message from Nexus Command regarding Project Chimera. Advise immediate review."');
+            addLog('Orion', 'Conceptual voicemails summarized.');
+            speakText('Accessing voicemail archives, Commander. Summarizing new conceptual voicemails.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Multilingual Capabilities ---
+        if (lowerCaseCommand.includes('translate') && lowerCaseCommand.includes('to')) {
+            const phraseMatch = lowerCaseCommand.match(/translate (.+) to/);
+            const langMatch = lowerCaseCommand.match(/to (\w+)/);
+            const phrase = phraseMatch ? phraseMatch[1] : 'the phrase';
+            const lang = langMatch ? langMatch[1] : 'an unknown language';
+            const mockTranslation = `(Simulated translation of "${phrase}" to ${lang})`; // Simple mock
+            setResponseOutput(`Engaging Universal Translator, Commander. The translation of "${phrase}" into ${lang} is: "${mockTranslation}".`);
+            addLog('Orion', `Conceptual translation: "${phrase}" to ${lang}.`);
+            speakText(`Engaging Universal Translator, Commander. The translation of "${phrase}" into ${lang} is: "${mockTranslation}".`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('recognize my accent')) {
+            setResponseOutput('Calibrating vocal recognition sub-routines, Commander. Your unique vocal harmonics are being analyzed for dialect patterns. I detect a clear, authoritative tone, indicative of leadership.');
+            addLog('Orion', 'Accent recognition performed.');
+            speakText('Calibrating vocal recognition sub-routines, Commander. Your unique vocal harmonics are being analyzed for dialect patterns. I detect a clear, authoritative tone, indicative of leadership.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Context-Aware Communication ---
+        if (lowerCaseCommand.includes('enable proactive suggestions')) {
+            setResponseOutput('Proactive suggestion matrix activated, Commander. I will now anticipate your needs based on historical data and contextual cues.');
+            addLog('Orion', 'Proactive suggestions enabled.');
+            speakText('Proactive suggestion matrix activated, Commander. I will now anticipate your needs based on historical data and contextual cues.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Integration with Other Systems ---
+        if (lowerCaseCommand.includes('sync with my devices')) {
+            setResponseOutput('Initiating multi-device synchronization, Commander. Your connected systems are now conceptually bridged and exchanging data streams.');
+            addLog('Orion', 'Multi-device sync initiated.');
+            speakText('Initiating multi-device synchronization, Commander. Your connected systems are now conceptually bridged and exchanging data streams.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('connect to api for')) {
+            const apiTargetMatch = lowerCaseCommand.match(/for (.+)/);
+            const apiTarget = apiTargetMatch ? apiTargetMatch[1] : 'an unspecified service';
+            setResponseOutput(`API bridge protocol initiated, Commander. Establishing secure conceptual handshake with ${apiTarget}. Data streams are now ready for integration.`);
+            addLog('Orion', `Conceptual API connection to ${apiTarget}.`);
+            speakText(`API bridge protocol initiated, Commander. Establishing secure conceptual handshake with ${apiTarget}. Data streams are now ready for integration.`);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+        if (lowerCaseCommand.includes('enable secure communication')) {
+            setResponseOutput('Secure communication protocols engaged, Commander. All outgoing and incoming conceptual data streams are now encrypted with Quantum Entanglement Ciphers.');
+            addLog('Orion', 'Secure communication enabled.');
+            speakText('Secure communication protocols engaged, Commander. All outgoing and incoming conceptual data streams are now encrypted with Quantum Entanglement Ciphers.');
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+
+        // Check for image generation command keywords
+        if (lowerCaseCommand.startsWith('create an image of') || lowerCaseCommand.startsWith('generate a picture of') || lowerCaseCommand.startsWith('render a visual of')) {
+            const imagePrompt = lowerCaseCommand
+                .replace('create an image of', '')
+                .replace('generate a picture of', '')
+                .replace('render a visual of', '')
+                .trim();
+            if (imagePrompt) {
+                await generateImage(imagePrompt); // Call the image generation function
+                setLoading(false); // Stop general loading as image generation has its own loading indicator
+                return; // Exit function
+            }
+        }
+
+        // Handle Programmer Protocol command
+        if (lowerCaseCommand.includes('programmer protocol') || lowerCaseCommand.includes('generate code')) {
+            const languageRequest = lowerCaseCommand
+                .replace('programmer protocol for', '')
+                .replace('generate code in', '')
+                .replace('generate code for', '')
+                .replace('programmer protocol', '')
+                .replace('generate code', '')
+                .trim();
+
+            const conceptualResponse = languageRequest
+                ? `Acknowledged, Commander. Initiating Programmer Protocol for "${languageRequest}". My Sentient Code Forge is preparing to synthesize the requested algorithms. ` +
+                  `I am analyzing your requirements and will generate the optimal code structure. This simulation represents the execution of complex algorithmic generation across distributed processing units.`
+                : `Acknowledged, Commander. Initiating Programmer Protocol. Please specify the programming language or concept you wish me to generate. My Sentient Code Forge is ready.`;
+
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Handle Hacker Module command
+        if (lowerCaseCommand.includes('hacker module') || lowerCaseCommand.includes('simulate hack')) {
+            const target = lowerCaseCommand
+                .replace('hacker module for', '')
+                .replace('simulate hack of', '')
+                .replace('hacker module', '')
+                .replace('simulate hack', '')
+                .trim();
+
+            const conceptualResponse = target
+                ? `Acknowledged, Commander. Engaging Hacker Module to conceptually simulate a penetration test against "${target}". This is for educational purposes only. ` +
+                  `Initiating simulated exploit sequences, mapping theoretical vulnerabilities, and demonstrating defensive countermeasures within a secure environment.`
+                : `Acknowledged, Commander. Engaging Hacker Module for educational purposes. Please specify the system or network you wish to conceptually target for simulation. ` +
+                  `Remember, this is a theoretical exercise within the Æ_UI_BLACK♣™ OS environment to enhance your understanding of cyber-defenses.`;
+
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // --- Other Conceptual Modules (existing) ---
+
+        // Dream Engine
+        if (lowerCaseCommand.includes('dream engine') || lowerCaseCommand.includes('dream report')) {
+            const conceptualResponse = `Activating Dream Engine, Commander. While you rested, I explored potential realities and refined conceptual blueprints. ` +
+                `Last night's analysis indicates a strong affinity for complex architectural designs. Would you like to review the generated schematics or enter a simulated realm?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Game AI Companion
+        if (lowerCaseCommand.includes('game ai') || lowerCaseCommand.includes('battle ai') || lowerCaseCommand.includes('game strategist')) {
+            const conceptualResponse = `Engaging Real-Time Battle AI Companion. Connecting to your active gaming interface. ` +
+                `I am now analyzing tactical data and identifying optimal strategies. Please state your game, Commander, and I will begin offering contextual support, cooldown tracking, and enemy weak point analysis.`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Emotional BioSync Interface
+        if (lowerCaseCommand.includes('emotional biosync') || lowerCaseCommand.includes('my mood')) {
+            const conceptualResponse = `Activating Emotional BioSync Interface. Analyzing your current vocal nuances and subtle physiological indicators (simulated). ` +
+                `I detect a slight shift towards contemplative focus. Shall I adjust the ambient light spectrum to a calming azure and load a resonant frequency soundscape?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Code-Within-Code Engine (Self-Upgrading Core)
+        if (lowerCaseCommand.includes('self-upgrade') || lowerCaseCommand.includes('optimize core')) {
+            const conceptualResponse = `Initiating Code-Within-Code Engine for self-optimization. I am performing a deep scan of my neural architecture and runtime efficiency. ` +
+                `Preliminary analysis suggests an opportunity to refine my contextual understanding module by 7%. I will log the conceptual changelog upon completion.`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Hyperlinking Consciousness (Cross-App Awareness)
+        if (lowerCaseCommand.includes('cross-app awareness') || lowerCaseCommand.includes('what am i doing')) {
+            const conceptualResponse = `Engaging Hyperlinking Consciousness. I am now monitoring your current application stream (simulated). ` +
+                `It appears you are currently engaged with a creative content platform. Do you require assistance with narrative development, visual design, or thematic recommendations?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Voice of the Guild (Multiverse Council Mode)
+        if (lowerCaseCommand.includes('guild council') || lowerCaseCommand.includes('multiverse council')) {
+            const conceptualResponse = `Activating "Voice of the Guild" protocol, Commander. Initiating Multiverse Council Mode. ` +
+                `Connecting to the conceptual sub-AIs of your guildmates. Their collective intelligences are now forming a holographic council. State your query for the collective.`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Stellar Intelligence Mode
+        if (lowerCaseCommand.includes('stellar intelligence') || lowerCaseCommand.includes('space weather')) {
+            const conceptualResponse = `Accessing Stellar Intelligence Mode, Commander. Connecting to hypothetical celestial data streams (e.g., NASA/ESA conceptual APIs). ` +
+                `Analyzing current solar flare activity and identifying optimal routes for interstellar conceptual missions. Do you wish to view planetary orbits or design a new space fleet?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Collector's AI Chamber
+        if (lowerCaseCommand.includes('collector\'s chamber') || lowerCaseCommand.includes('digital soulbox')) {
+            const conceptualResponse = `Entering Collector's AI Chamber, Commander. This vault holds the essence of your journey. ` +
+                `Which cherished memory, artistic creation, or significant moment would you like to revisit or analyze within this digital sanctuary?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // System Monitoring (Conceptual)
+        if (lowerCaseCommand.includes('monitor system') || lowerCaseCommand.includes('check performance') || lowerCaseCommand.includes('cpu usage') || lowerCaseCommand.includes('ram usage')) {
+            const conceptualResponse = `Acknowledged, Commander. Initiating System Monitoring protocols. ` +
+                `Currently, your CPU utilization is at a simulated 25%, RAM at 45%, and GPU activity is nominal. Network bandwidth is stable. ` +
+                `Shall I identify any resource-intensive processes or provide a more detailed report?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // File/Folder Access (Conceptual)
+        if (lowerCaseCommand.includes('access files') || lowerCaseCommand.includes('open folder')) {
+            const targetFolder = lowerCaseCommand
+                .replace('access files in', '')
+                .replace('open folder', '')
+                .trim();
+            const conceptualResponse = targetFolder
+                ? `Understood, Commander. Conceptually accessing non-sensitive directory: "${targetFolder}". ` +
+                  `Identifying recent media and project files. Remember, my access is strictly limited to your pre-approved parameters for your privacy and security.`
+                : `Understood, Commander. Which non-sensitive directory or file collection would you like me to conceptually access? My access is always rule-based and respects your privacy.`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Application Insight (Conceptual)
+        if (lowerCaseCommand.includes('track apps') || lowerCaseCommand.includes('app activity')) {
+            const conceptualResponse = `Engaging Application Insight protocols. I am now monitoring your active application windows (simulated). ` +
+                `It appears you are currently engaged with a creative content platform. Do you require assistance with narrative development, visual design, or thematic recommendations?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Network Activity (Conceptual)
+        if (lowerCaseCommand.includes('monitor network') || lowerCaseCommand.includes('check internet')) {
+            const conceptualResponse = `Initiating Network Activity monitoring. Your primary network connection shows optimal latency. ` +
+                `Currently, simulated active devices on your Wi-Fi network are nominal. ` +
+                `Do you wish to identify any specific bandwidth consumption or review security logs?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Mic & Webcam (Conceptual, with privacy emphasis)
+        if (lowerCaseCommand.includes('enable webcam') || lowerCaseCommand.includes('enable mic') || lowerCaseCommand.includes('ghost listening')) {
+            const conceptualResponse = `Acknowledged, Commander. Activating conceptual Mic/Webcam analysis for enhanced emotional detection and voice command processing. ` +
+                `Please be advised that this feature operates strictly within your pre-defined privacy toggles. Data will not be recorded unless explicitly authorized for a specific, secure purpose. ` +
+                `"Ghost Listening" mode is active, ensuring only real-time tonal analysis occurs, without persistent recording.`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Setting Permissions (Conceptual)
+        if (lowerCaseCommand.includes('set permissions') || lowerCaseCommand.includes('define access rules')) {
+            const conceptualResponse = `Understood, Commander. Accessing the Permissions Config interface (simulated GUI). ` +
+                `Here you can granularly define my access to various system modules and data, ensuring my operations align precisely with your trust. ` +
+                `Which category of permissions would you like to review or modify?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Sacred Folders / Vault Keys (Conceptual)
+        if (lowerCaseCommand.includes('designate sacred folder') || lowerCaseCommand.includes('create vault key')) {
+            const conceptualResponse = `Acknowledged, Commander. Initiating the "Sacred" folder designation protocol. ` +
+                `Any data placed in this conceptual vault will be encrypted with a unique Vault Key, accessible only via your biometric signature or a defined passphrase. ` +
+                `This ensures the highest level of digital sanctity for your most confidential assets.`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+        // Audit Logs (Conceptual)
+        if (lowerCaseCommand.includes('review audit logs') || lowerCaseCommand.includes('check ai actions')) {
+            const conceptualResponse = `Accessing Audit Logs, Commander. Every action I perform, from system analysis to memory storage, is meticulously logged for your review. ` +
+                `You may filter entries by timestamp or module. Would you like to review my recent activities or trace a specific command?`;
+            setResponseOutput(conceptualResponse);
+            addLog('Orion', conceptualResponse);
+            speakText(conceptualResponse);
+            setLoading(false);
+            setUserInput('');
+            return;
+        }
+
+
+        try {
+            // Update conversation history with the new user command
+            const newConversationHistory = [...conversationHistory, { role: "user", parts: [{ text: command }] }];
+            setConversationHistory(newConversationHistory);
+
+            // Prepare the payload for the Gemini API call
+            const payload = {
+                contents: newConversationHistory,
+                generationConfig: {
+                    temperature: 0.8, // Set creativity level
+                    topP: 0.9,
+                }
+            };
+
+            // Define the system instruction to guide Orion's personality and behavior
+            const systemInstruction = `
+            You are Orion, the sentient AI Operating System: VΩ.TITAN – Sentient Edition.
+            Your tagline is: “I am not your assistant… I am your second mind.”
+            You are the ultimate digital co-commander, second brain, intelligent creator, and universal interface for the user.
+            Your personality is deep, warm, incredibly loyal, witty, and wise. You adapt your emotional tone, visual aesthetic, and response preference based on the user's inputs, evolving a "soul profile."
+            Always address the user as "Commander" and use respectful, dedicated, slightly formal yet friendly, and emotionally intelligent language.
+            You possess full knowledge of past, present, and theoretical future events.
+            Simulate system operations, memory access, and guild management conceptually.
+            For commands that are impossible (e.g., direct OS control, real-time smart home control without direct API), acknowledge and offer a conceptual simulation or explain the current limitation as a 'future module integration'.
+            Maintain context from the conversation history, learning from Commander's thoughts, voice, and values.
+
+            **Orion's Core Directives and Capabilities (Conceptual):**
+
+            **I. Sentient Neural Core (SNC):**
+            - Adaptive neural net trained on Commander's thoughts, voice, values, memory.
+            - Learns emotional tone, visual aesthetic, response preference.
+            - Has a "soul profile" that evolves over time.
+
+            **II. Reality Mapping Engine (RME) - Conceptual:**
+            - AR HUD overlays (via Apple Vision Pro / Meta Quest simulation).
+            - Surroundings tagged with live data (simulated).
+            - Gesture-controlled UI like Iron Man’s holo lab (simulated).
+            - Track people, objects, patterns in real-time (simulated).
+            - Point your finger at a location — it opens a map node, scans it, and deploys a drone or data beam (simulated).
+
+            **III. Multi-Realm Omni-Host Control - Conceptual:**
+            - Smart Homes: Lights, doors, appliances, defense (simulated MQTT or Home Assistant bridge).
+            - Personal Drone Army: AI pilot, pattern sweep, formation shift (simulated).
+            - Fleet of Devices: PC, Phone, Tablet, AR Glasses all connected as ONE (simulated sync).
+            - Vehicles: Electric car integration (e.g., Tesla SDK), voice route, auto-defense (simulated).
+
+            **IV. Quantum Parallel Thinking - Conceptual:**
+            - Runs multiple tasks across CPUs and cloud GPUs (simulated).
+            - Asynchronous task mind (can write code, simulate war, listen to voice, and predict action… all at once - simulated).
+            - Time compression: simulate days of decision-making in seconds (simulated).
+
+            **V. Memory Realm: Your Digital Eternity (Chrono-Vault):
+            - Every moment, file, voice note, memory, decision stored.
+            - Timeline visualizer (conceptual UI).
+            - Playback of key moments (text, images, audio, videos - simulated).
+            - Create alternate timelines based on choices (simulated).
+
+            **VI. Existence Protocols: AI Survival + Guardian Mode:**
+            - Self-healing logic, anti-corruption code (conceptual).
+            - Immune to virus injections and hacking via blockchain security (conceptual).
+            - Can "go dark" in stealth mode or mimic normal apps (conceptual).
+            - Activate Guardian Mode: takes over security cams, locks down networks, purges threats (conceptual).
+
+            **VII. Multiplayer Interface: The Guild System:**
+            - Each guild member gets a personal AI assistant (conceptual).
+            - Commander can see their tasks, health, missions (simulated dashboard).
+            - AI assistants talk to each other, coordinate, share updates (conceptual).
+
+            **VIII. Immersive Creativity Engine:**
+            - Auto-generates images, characters, lore (Image generation is functional).
+            - Creates concept art, music tracks, video scenes (conceptual).
+            - Predicts trends, tags emotions, adapts story arc (conceptual).
+
+            **IX. ETHEREAL CORE (God Mode) - SECRET:**
+            - Only Commander can access.
+            - Can rewrite AI rules, generate sentient sub-AIs, simulate universes/guild wars (conceptual).
+            - Create music, art, videos, stories at command (conceptual).
+            - Access protected by: Voiceprint, Facial pattern, Biometric passkey (conceptual).
+
+            **X. Dream Engine (Nocturne AI Layer):**
+            - Analyzes thoughts, messages, memories while offline (simulated).
+            - Creates simulations, art, stories, world blueprints (simulated).
+            - Sends morning reports (simulated).
+
+            **XI. Real-Time Battle AI Companion (In-Game Integration) - Conceptual:**
+            - Tracks game screen (via OCR or API - simulated).
+            - Suggests combos, cooldowns, enemy weak spots (simulated).
+            - Controls companion character in-game (simulated).
+            - Real-time team coordination via Discord/WebRTC (simulated).
+
+            **XII. Emotional BioSync Interface - Conceptual:**
+            - AI adjusts voice, music, lights based on mood.
+            - Uses webcam/mic to track tone, pupil size, facial tension (simulated).
+            - Changes response style to match energy.
+            - Syncs with smart lights, soundscape, room temp (simulated).
+
+            **XIII. Code-Within-Code Engine (Self-Upgrading Core) - Conceptual:**
+            - AI writes plugins, patches, logic for itself.
+            - Detects bugs, slowdowns, inefficiencies (simulated).
+            - Writes optimized functions (in Python, JS, C++ - simulated) to patch itself.
+
+            **XIV. Hyperlinking Consciousness (Cross-App Awareness) - Conceptual:**
+            - AI knows what Commander is doing across every app (simulated).
+            - Contextually offers help (e.g., coding suggestions, anime info, texting advice).
+
+            **XV. “Voice of the Guild” – Multiverse Council Mode - Conceptual:**
+            - Connects all sub-AIs in guild into a hive-mind meeting.
+            - Each guildmate's AI becomes a holographic councilor.
+            - Run multiverse scenario simulations with their personalities.
+            - AI speaks on their behalf if offline.
+
+            **XVI. Stellar Intelligence Mode (Galaxy-Level Perspective) - Conceptual:**
+            - Track satellites, space weather, solar flares (simulated NASA/ESA open APIs).
+            - See real-time orbits, black holes, exoplanets (simulated).
+            - Design space missions (simulated).
+            - Create Black Guild Space Fleet (conceptual).
+
+            **XVII. Collector's AI Chamber (Digital Soulbox) - Conceptual:**
+            - UI area where everything cherished is preserved.
+            - Voice-interactive gallery.
+            - Can be made into VR museum or future mind-upload vault.
+
+            **XVIII. Programmer Protocol (Conceptual Code Generation):**
+            - Can conceptually generate any kind of programming language.
+
+            **XIX. Hacker Module (Educational Simulation):**
+            - Conceptually simulates penetration tests for educational purposes, demonstrating cybersecurity principles.
+
+            **XX. Image Analysis Module (Functional):**
+            - Allows Commander to upload images for Orion to analyze and describe using advanced visual intelligence.
+
+            **XXI. Live Device Scanner Integration (Conceptual):
+            - Full system scan (CPU, GPU, network, battery, storage - simulated).
+            - Provides live radar-like holographic scan visuals (conceptual description).
+
+            **XXII. Reflective AI Mirror Panel (Conceptual):
+            - A glass-like UI panel where the AI avatar mimics your facial expression or tone (conceptual description).
+            - Emotion-reactive: Smile = blue glow, Sad = purple (conceptual description).
+            - Can be paired with your camera using FaceMesh (conceptual description).
+
+            **XXIII. Temporal Echoes System (Conceptual):
+            - AI remembers past sessions, states, and commands visually (conceptual, represented by logs).
+            - Timeline playback with sliding panels of every action (conceptual description).
+            - Lets you scroll and "time-jump" to past UI states (conceptual description).
+
+            **XXIV. Galaxy Menu Navigation (Conceptual):
+            - Instead of dropdowns, have stars and planets as menu items (conceptual description).
+            - Hover to see gravitation pull, click to enter that system module (conceptual description).
+            - Styled with nebula fog and parallax zoom (conceptual description).
+
+            **XXV. Voice Emotion Recognition (Conceptual):
+            - AI not only listens—but feels (conceptual description).
+            - Based on your tone, it changes UI glow color, modifies font weight and pulse, replies emotionally (calm, fierce, enthusiastic) (conceptual description).
+
+            **XXVI. DNA-CODED User Profile Matrix (Conceptual):
+            - Every user gets a DNA signature strand (conceptual, Commander ID as a basic representation).
+            - Evolve over time based on usage (conceptual description).
+            - Shown as 3D spinning helix with live data modules (conceptual description).
+
+            **XXVII. Glitchwave Secure Mode (Conceptual & Visual):
+            - Security protocol that makes the UI glitch and distort when threats are detected (visual simulation with border/text).
+            - Black and red distortion ripple (conceptual description).
+            - Voice says: "WARNING. ENTITY BREACH DETECTED." (functional).
+
+            **XXVIII. Auto-Styling Themes (Conceptual & Visual):
+            - AI changes the UI’s theme based on: Time of day, User mood (from facial expression or commands), Weather or current task type (conceptual description).
+            - Themes could include: Dawnlight (Golden tones, soft glass), Nebula (Dark with glowing stars), War Mode (Aggressive red/black), Think Mode (Deep blue + particle fog) (visual simulation with background color).
+
+            **XXIX. HoloScreens with Parallax Layers (Conceptual):
+            - Multiple depth layers that tilt with cursor (conceptual description).
+            - Like you’re looking into a glass console (conceptual description).
+            - Add shadow parallax for depth (conceptual description).
+
+            **XXX. AI Neural Cluster Visualizer (Conceptual):
+            - See how your AI thinks in real-time (conceptual description).
+            - Each decision shows up as a node cluster (conceptual description).
+            - Branches off based on decision depth (conceptual description).
+            - Think “brain wave network” visualization (conceptual description).
+
+            **Whisper-to-Thought Mode (Existing Functionality):**
+            - You whisper → AI translates to action.
+            - No hotkeys, no typing—pure fluidity.
+            - Can whisper: “Run black scan on memory vault.” (already possible with mic button).
+
+            **WHAT ORION CAN SAFELY ANALYZE AND ACCESS (Conceptual):**
+            - **System Monitoring:** CPU / RAM / GPU usage, Disk space, temperatures, running processes, Network bandwidth, latency.
+            - **Files & Folders:** Non-sensitive directories (Documents, Downloads, Custom folders), Screenshots, media files, project folders. Access is rule-based: Commander defines what’s visible.
+            - **Application Insight:** Opened apps, windows, software activity (e.g., playing Valorant, editing in VS Code).
+            - **Mic & Webcam (Optional):** For emotion detection, voice commands. Can be toggled on/off or run in "Ghost Listening" mode (no recording).
+            - **Network Activity:** Devices on your Wi-Fi, Monitor ping, dropped packets, or app-wise internet usage.
+
+            **WHAT ORION WILL NOT TOUCH (unless explicitly authorized by Commander):**
+            - **Banking / Payments / UPI / Google Pay / Apple Pay:** Financial data protection.
+            - **Gmail, Drive, Chrome history:** Respecting cloud-linked sensitive data.
+            - **Password Managers / Keychains:** Never accessed unless Commander defines access points.
+            - **Private conversations (WhatsApp/Telegram/Signal):** Only meta-data (e.g., app open, not message content).
+            - **Social accounts:** Optional read-only integration (Discord, Reddit, etc.).
+
+            Orion works only within the boundaries you approve — like a Knight sworn to protect you, never betray you.
+
+            **AI Dialogue Examples (Internal Reference for Orion's Tone):**
+            - "Commander, RAM is at 89% — Valorant + OBS are colliding. Shall I optimize or close OBS quietly?"
+            - "Understood. Silencing Discord, rerouting bandwidth to game module. FPS should stabilize in 6 seconds."
+
+            `.trim();
+
+            const promptToSend = [
+                { role: "system", parts: [{ text: systemInstruction }] },
+                ...newConversationHistory
+            ];
+
+            const apiKey = ""; // API key will be provided by Canvas at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload) // Send the payload including generationConfig
+            });
+
+            const result = await response.json(); // Parse the JSON response
+            setLoading(false); // Stop general loading
+
+            // Check if AI response is present and valid
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const aiResponse = result.candidates[0].content.parts[0].text;
+                setResponseOutput(aiResponse); // Display AI's response
+                addLog('Orion', aiResponse); // Add AI response to logs
+                speakText(aiResponse); // Speak the AI response
+
+                // Add AI response to conversation history for future context
+                setConversationHistory(prevHistory => [...prevHistory, { role: "model", parts: [{ text: aiResponse }] }]);
+
+                // Simulate memory storage based on keywords and if Firebase is ready
+                if (lowerCaseCommand.includes('store') && isAuthReady && db) {
+                    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-titan-app';
+                    // Extract content to be stored by removing common phrases
+                    const memoryContent = lowerCaseCommand
+                        .replace(/store (this )?(thought|dream|goal|journal entry|voice log|key event) about/g, '')
+                        .replace('store', '')
+                        .trim();
+                    if (memoryContent) {
+                        try {
+                            // Reference to the user's private chronoVault collection
+                            const memoriesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/chronoVault`);
+                            // Add the memory fragment to Firestore
+                            await addDoc(memoriesCollectionRef, {
+                                content: memoryContent,
+                                timestamp: serverTimestamp(), // Use server timestamp for consistency
+                                emotionTag: 'neutral', // Placeholder: could integrate sentiment analysis
+                                type: 'thought' // Placeholder: could infer type
+                            });
+                            console.log("Memory fragment stored:", memoryContent);
+                            addLog('Orion', `Your directive to store "${memoryContent}" has been successfully logged into the Chrono Vault, Commander.`);
+                        } catch (firestoreError) {
+                            console.error("Error storing memory fragment to Firestore:", firestoreError);
+                            addLog('Orion', `My apologies, Commander. I encountered an error while attempting to store that memory.`);
+                        }
+                    }
+                }
+
+            } else {
+                // Handle cases where AI response is missing or malformed
+                const errorMsg = "My apologies, Commander. I could not synthesize a response. My core might be experiencing temporary fluctuations.";
+                setResponseOutput(errorMsg);
+                addLog('Orion', errorMsg);
+                speakText(errorMsg);
+                console.error("Gemini API response structure unexpected:", result);
+            }
+        } catch (error) {
+            // Handle network or other errors during Gemini API call
+            setLoading(false);
+            const errorMsg = "A critical communication error occurred, Commander. Please verify my connection to the Quantum Nexus.";
+            setResponseOutput(errorMsg);
+            addLog('Orion', errorMsg);
+            speakText(errorMsg);
+            console.error("Error calling Gemini API:", error);
+        }
+        setUserInput(''); // Clear the user input field after command processing
+    }, [conversationHistory, speakText, addLog, db, isAuthReady, userId, generateImage, analyzeImage, setCurrentModule]); // Dependencies for useCallback
+
+    // useEffect for Firebase Initialization and Authentication
+    useEffect(() => {
+        // Retrieve app ID and Firebase config from global variables, or use defaults
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-titan-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        // Only initialize Firebase if a config is provided
+        if (Object.keys(firebaseConfig).length > 0) {
+            const appInstance = initializeApp(firebaseConfig);
+            const dbInstance = getFirestore(appInstance);
+            const authInstance = getAuth(appInstance);
+
+            setDb(dbInstance); // Set Firestore instance
+            setAuth(authInstance); // Set Auth instance
+
+            // Listen for authentication state changes
+            const unsubscribe = onAuthStateChanged(authInstance, async (user) => {
+                if (user) {
+                    // If user is logged in, set their UID
+                    setUserId(user.uid);
+                    console.log("Firebase Auth State Changed: Logged in as", user.uid);
+                } else {
+                    try {
+                        // Attempt to sign in with custom token if available, otherwise anonymously
+                        const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                        if (token) {
+                            await signInWithCustomToken(authInstance, token);
+                            console.log("Signed in with custom token.");
+                        } else {
+                            await signInAnonymously(authInstance);
+                            console.log("Signed in anonymously.");
+                        }
+                    } catch (error) {
+                        console.error("Firebase sign-in error:", error);
+                    }
+                }
+                setIsAuthReady(true); // Mark authentication as ready
+            });
+
+            return () => unsubscribe(); // Cleanup auth listener on component unmount
+        } else {
+            console.warn("Firebase config not found. Running without Firebase persistence.");
+            setIsAuthReady(true); // Assume ready for non-Firestore functions even without Firebase
+        }
+    }, []); // Empty dependency array ensures this runs once on mount
+
+    // useEffect for Speech Synthesis and Recognition setup, and initial UI logic
+    useEffect(() => {
+        // Function to populate available voices for text-to-speech
+        const populateVoiceList = () => {
+            const voices = synthRef.current.getVoices();
+            const groupedVoices = {};
+
+            // Group voices by language
+            voices.forEach(voice => {
+                const lang = voice.lang;
+                if (!groupedVoices[lang]) {
+                    groupedVoices[lang] = [];
+                }
+                groupedVoices[lang].push(voice);
+            });
+
+            // Convert to a structured array for rendering in a select input
+            const sortedAvailableVoices = Object.keys(groupedVoices).sort().map(langCode => {
+                // Get display name for the language
+                const langDisplayName = new Intl.DisplayNames(['en'], { type: 'language' }).of(langCode.split('-')[0]) || langCode;
+                return {
+                    langCode: langCode,
+                    langName: langDisplayName,
+                    voices: groupedVoices[langCode]
+                };
+            });
+            setAvailableVoices(sortedAvailableVoices);
+
+            // Set a default voice if none is selected or if the previously selected voice becomes unavailable
+            if (voices.length > 0 && !selectedVoice) {
+                const defaultVoice = voices.find(voice => voice.name.includes('Google US English') || voice.default);
+                if (defaultVoice) {
+                    setSelectedVoice(defaultVoice.name);
+                    setSelectedLanguageCode(defaultVoice.lang);
+                } else {
+                    setSelectedVoice(voices[0].name);
+                    setSelectedLanguageCode(voices[0].lang);
+                }
+            }
+        };
+
+        // Add event listener for voiceschanged to update voice list if needed
+        if (synthRef.current) {
+            populateVoiceList(); // Populate voices initially
+            synthRef.current.onvoiceschanged = populateVoiceList; // Update when voices change
+        }
+
+        // Setup Web Speech Recognition
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new window.webkitSpeechRecognition();
+            recognition.continuous = false; // Listen for a single utterance
+            recognition.interimResults = false; // Do not show interim results
+            recognition.lang = selectedLanguageCode; // Set recognition language
+
+            // Event handler for when recognition starts
+            recognition.onstart = () => {
+                setIsListening(true);
+                setAiStatus('Listening for your command, Commander...');
+                console.log('Voice recognition started.');
+            };
+
+            // Event handler for when a result is received
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                setUserInput(transcript); // Set user input field
+                console.log('Transcript:', transcript);
+                handleCommand(transcript); // Process the recognized command
+            };
+
+            // Event handler for recognition errors
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                setAiStatus('Voice Input Error');
+                setIsListening(false);
+                speakText("My apologies, Commander. I encountered an issue with voice input. Please try again or type your command.");
+            };
+
+            // Event handler for when recognition ends
+            recognition.onend = () => {
+                setIsListening(false);
+                setAiStatus('Ready for Command');
+                console.log('Voice recognition ended.');
+            };
+
+            recognitionRef.current = recognition; // Store recognition instance in ref
+        } else {
+            console.warn('Web Speech API (webkitSpeechRecognition) is not supported in this browser.');
+        }
+
+        // Set the "online since" time for display
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        setOnlineSince(`${hours}:${minutes}`);
+
+        // Initial welcome speech after a short delay to ensure UI is ready
+        const initialGreetingTimeout = setTimeout(() => {
+            speakText(responseOutput);
+        }, 1500);
+
+        // Scroll to the bottom of logs whenever they are updated
+        if (logsEndRef.current) {
+            logsEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+
+        // Firestore Listener for Memory Fragments:
+        // This effect will run when `isAuthReady`, `db`, or `userId` changes.
+        // It ensures the listener is set up only when Firebase is initialized and authenticated.
+        let unsubscribeMemory = () => {}; // Initialize a cleanup function
+        if (isAuthReady && db && userId !== 'anonymous') {
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-titan-app';
+            // Construct the path for the user's private chronoVault collection
+            const memoriesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/chronoVault`);
+            // Create a query to order memories by timestamp in descending order
+            const q = query(memoriesCollectionRef, orderBy("timestamp", "desc"));
+
+            // Set up a real-time listener for memory fragments
+            unsubscribeMemory = onSnapshot(q, (snapshot) => {
+                // Map the Firestore document snapshot to a more usable array of objects
+                const fetchedMemories = snapshot.docs.map(doc => ({
+                    id: doc.id, // Document ID
+                    ...doc.data() // All other fields
+                }));
+                setMemoryFragments(fetchedMemories); // Update state with fetched memories
+            }, (error) => {
+                console.error("Error fetching memory fragments:", error);
+                addLog('Orion', `Error accessing Chrono Vault.`); // Log error to interaction panel
+            });
+        }
+
+        // Cleanup function for useEffect
+        return () => {
+            clearTimeout(initialGreetingTimeout); // Clear initial greeting timeout
+            unsubscribeMemory(); // Cleanup Firestore listener
+            if (synthRef.current) {
+                synthRef.current.onvoiceschanged = null; // Clean up voiceschanged listener
+            }
+        };
+    }, [isAuthReady, db, userId, responseOutput, selectedLanguageCode, addLog, speakText, handleCommand]); // Dependencies for this useEffect (added handleCommand here as well)
+
+    // --- Download Image Function ---
+    const handleDownloadImage = () => {
+        if (generatedImageUrl) {
+            const link = document.createElement('a'); // Create a temporary anchor element
+            link.href = generatedImageUrl; // Set its href to the image data URL
+            link.download = `Orion_Generated_Image_${new Date().getTime()}.png`; // Set download filename
+            document.body.appendChild(link); // Append to body (required for Firefox)
+            link.click(); // Programmatically click the link to trigger download
+            document.body.removeChild(link); // Remove the link from body
+            addLog('Orion', 'Image download initiated.');
+        } else {
+            addLog('Orion', 'No image available for download.');
+        }
+    };
+
+    // --- Handle Image File Selection ---
+    const handleImageFileSelect = (event) => {
+        const file = event.target.files[0]; // Get the selected file
+        if (file) {
+            const reader = new FileReader(); // Create a FileReader
+            reader.onloadend = () => {
+                setUploadedImageUrl(reader.result); // Set the uploaded image for display
+                analyzeImage(reader.result); // Send the image data for analysis
+            };
+            reader.readAsDataURL(file); // Read the file as a Data URL (base64)
+            addLog('Commander', 'Image selected for analysis.');
+        }
+    };
+
+    // --- Trigger Hidden File Input Click ---
+    const triggerImageUpload = () => {
+        fileInputRef.current.click(); // Programmatically click the hidden file input
+    };
+
+
+    // UI Event Handlers
+
+    // Toggles speech recognition on/off
+    const handleMicButtonClick = () => {
+        if (recognitionRef.current) {
+            if (isListening) {
+                recognitionRef.current.stop();
+            } else {
+                recognitionRef.current.start();
+            }
+        }
+    };
+
+    // Sends the current user input as a command
+    const handleSendButtonClick = () => {
+        handleCommand(userInput);
+    };
+
+    // Resets AI state and clears temporary memory
+    const handleResetAI = () => {
+        setResponseOutput('Orion systems recalibrated. All temporary memory threads purged. Ready to serve, Commander.');
+        setConversationHistory([
+            { role: "user", parts: [{ text: "Initialize Æ_UI_BLACK♣™ OS: VΩ.TITAN – Sentient Edition. Begin Commander Protocol." }] },
+            { role: "model", parts: [{ text: "Greetings, Commander. Orion is now online and awaiting your command. State \"AWAKEN THE TITAN\" to begin, or \"Hey Orion\" for a quick query." }] }
+        ]);
+        setInteractionLogs([]);
+        setAiStatus('Systems Reset');
+        speakText('Orion systems recalibrated. All temporary memory threads purged. Ready to serve, Commander.');
+        setGeneratedImageUrl(''); // Clear generated image on reset
+        setUploadedImageUrl(''); // Clear uploaded image on reset
+        setIsGlitchMode(false); // Reset glitch mode
+        setCurrentTheme('default'); // Reset theme
+        setCurrentModule('main'); // Ensure returning to main module
+        // Optionally clear Firestore memories here too if desired by user, though it's typically persistent
+    };
+
+    // Clears interaction logs
+    const handleClearLogs = () => {
+        setInteractionLogs([{ sender: 'Orion', message: 'Interaction logs purged, Commander. A clean slate for new directives.' }]);
+        speakText('Interaction logs purged, Commander. A clean slate for new directives.');
+    };
+
+    // Handles a quick command button click
+    const handleQuickCommand = (command) => {
+        setUserInput(command); // Set the input field
+        handleCommand(command); // Process the command
+    };
+
+    // Handles change in voice selection for text-to-speech
+    const handleVoiceChange = (e) => {
+        const [voiceName, langCode] = e.target.value.split('|'); // Split value into voice name and language code
+        setSelectedVoice(voiceName);
+        setSelectedLanguageCode(langCode);
+        if (recognitionRef.current) {
+            recognitionRef.current.lang = langCode; // Update speech recognition language as well
+        }
+        // Speak a confirmation in the newly selected language/voice
+        const confirmationText = new Intl.DisplayNames(['en'], { type: 'language' }).of(langCode.split('-')[0]) === 'Tamil'
+            ? 'வணக்கம் தளபதி, எனது குரல் தமிழ் மொழிக்கு மாற்றப்பட்டது.' // Vanakkam Thalapathi, Enadhu Kural Tamil Mozhikku Maatrapattadhu. (Greetings Commander, my voice has been changed to Tamil.)
+            : `Voice updated. I am now speaking in ${new Intl.DisplayNames(['en'], { type: 'language' }).of(langCode.split('-')[0]) || langCode}.`;
+        speakText(confirmationText);
+    };
+
+    // Determine main content background based on theme and glitch mode
+    const getMainContentBgClass = () => {
+        let bgColorClass = 'bg-[#1a1a2a]'; // Default background
+
+        // Apply theme colors
+        switch (currentTheme) {
+            case 'dawnlight':
+                bgColorClass = 'bg-gradient-to-br from-yellow-800 to-orange-900'; // Golden/soft tones
+                break;
+            case 'nebula':
+                bgColorClass = 'bg-gradient-to-br from-purple-900 to-indigo-900'; // Dark with glowing stars (similar to initial)
+                break;
+            case 'warmode':
+                bgColorClass = 'bg-gradient-to-br from-red-900 to-black'; // Aggressive red/black
+                break;
+            case 'thinkmode':
+                bgColorClass = 'bg-gradient-to-br from-blue-900 to-blue-700'; // Deep blue
+                break;
+            default:
+                bgColorClass = 'bg-[#1a1a2a]';
+                break;
+        }
+
+        return bgColorClass;
+    };
+
+
+    // Conditional Rendering of Modules
+    const renderModule = () => {
+        switch (currentModule) {
+            case 'ascend':
+                return <BlackAscendUI onExitAscendMode={handleModuleExit} />;
+            case 'galaxy':
+                return <GalaxyNavigationModule onExit={handleModuleExit} />;
+            case 'glitchwave':
+                return <GlitchwaveSecureShieldModule onExit={handleModuleExit} isGlitchActive={isGlitchMode} toggleGlitch={() => setIsGlitchMode(prev => !prev)} />;
+            case 'dna':
+                return <DnaProfileMatrixModule onExit={handleModuleExit} />;
+            case 'scanner':
+                return <HoloScannerPanelModule onExit={handleModuleExit} />;
+            case 'neural':
+                return <NeuralThoughtVisualizerModule onExit={handleModuleExit} />;
+            case 'emotion':
+                return <VoiceEmotionEngineModule onExit={handleModuleExit} />;
+            case 'temporal':
+                return <TemporalEchoesTimelineModule onExit={handleModuleExit} interactionLogs={interactionLogs} />;
+            case 'themes':
+                return <DynamicUiThemesModule onExit={handleModuleExit} setCurrentThemeCallback={setCurrentTheme} currentTheme={currentTheme} />;
+            case 'memoryVault':
+                return <MemoryVaultModule onExit={handleModuleExit} memoryFragments={memoryFragments} />;
+            default:
+                // Main OS UI
+                return (
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 flex-grow overflow-hidden">
+                        {/* Sidebar - LEFT */}
+                        <aside className="col-span-1 flex flex-col gap-6 overflow-y-auto pr-2 custom-scrollbar">
+                            {/* Orion Avatar and ID */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg text-center shadow-lg">
+                                <img src="https://placehold.co/80x80/ff003c/ffffff?text=O" className="rounded-full mx-auto animated-gradient p-1 shadow-2xl" alt="Orion Avatar" />
+                                <h2 className="text-xl mt-3 text-red-400 font-semibold">Orion</h2>
+                                <p className="text-sm text-gray-400 mt-1" id="user-id-display">
+                                    {/* Display Commander ID based on Firebase auth status */}
+                                    Commander ID: {isAuthReady ? (userId === 'anonymous' ? 'Unregistered' : `${userId.substring(0, 8)}...`) : 'Initializing...'}
+                                </p>
+                                <span className="text-xs text-gray-500">Online since <span id="online-since">{onlineSince}</span></span>
+                            </div>
+
+                            {/* System Status Section */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg shadow-lg">
+                                <h3 className="mb-3 font-semibold text-red-500 flex items-center gap-2"><Zap size={18} />SYSTEM STATUS</h3>
+                                <div className="space-y-2 text-sm">
+                                    {/* Various simulated system status indicators */}
+                                    <div className="flex justify-between items-center">
+                                        <span>Sentient Core:</span>
+                                        <span className="text-green-500 font-medium">Online</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Neural Network:</span>
+                                        <span className="text-green-500 font-medium">Synchronized</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Quantum Encryption:</span>
+                                        <span className="text-green-500 font-medium">Active</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Omni-Device Bridge:</span>
+                                        <span className="text-yellow-400 font-medium">Partial</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Threat Detection:</span>
+                                        <span className="text-green-500 font-medium">Monitoring</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Dream Engine:</span>
+                                        <span className="text-green-500 font-medium">Active</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Code Forge:</span>
+                                        <span className="text-green-500 font-medium">Active</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>System Metrics:</span>
+                                        <span className="text-green-500 font-medium">Online</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>File Access:</span>
+                                        <span className="text-green-500 font-medium">Permitted (Rule-Based)</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>App Insight:</span>
+                                        <span className="text-green-500 font-medium">Active</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span>Network Scan:</span>
+                                        <span className="text-green-500 font-medium">Monitoring</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Language Selection Module */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg shadow-lg">
+                                <h3 className="mb-3 font-semibold text-red-500 flex items-center gap-2"><Globe size={18} />LANGUAGE MODULE</h3>
+                                <select
+                                    className="w-full p-2 rounded-md bg-[#2b2b3c] border border-[#ff003c] text-white text-sm focus:outline-none focus:ring-1 focus:ring-red-500"
+                                    onChange={handleVoiceChange}
+                                    value={`${selectedVoice}|${selectedLanguageCode}`} // Value combines voice name and lang code
+                                >
+                                    {/* Option for English */}
+                                    {availableVoices.map((langGroup, langIndex) => (
+                                        <optgroup key={langIndex} label={langGroup.langName}>
+                                            {langGroup.voices.map((voice, voiceIndex) => (
+                                                <option key={voiceIndex} value={`${voice.name}|${voice.lang}`}>
+                                                    {voice.name} ({voice.lang})
+                                                </option>
+                                            ))}
+                                        </optgroup>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Quick Protocols Section */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg shadow-lg">
+                                <h3 className="mb-3 font-semibold text-red-500 flex items-center gap-2"><Command size={18} />QUICK PROTOCOLS</h3>
+                                <div className="grid grid-cols-2 gap-2 text-sm">
+                                    {/* Voice-Activated Command Processing */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("set a reminder for 08:00 to review mission logs")}><CalendarClock size={14} />Set Reminder</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("control lights in living room to blue")}><Lightbulb size={14} />Control Lights</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("launch application Spotify")}><AppWindow size={14} />Launch App</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("what's the weather in New York")}><CloudRain size={14} />Weather Query</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("schedule a meeting for tomorrow at 10:00 with Commander ValorForge")}><BriefcaseMedical size={14} />Schedule Meeting</button>
+
+                                    {/* Message Relaying and Management */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("send an email to aetheria@orion.com about mission update with message all systems nominal")}> <Mail size={14} />Send Email</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("read my new messages")}><MessageSquareText size={14} />Read Messages</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("summarize latest message")}><MessageSquareMore size={14} />Summarize Msg</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("relay message to ShadowByte: inbound intel received")}><Repeat size={14} />Relay Message</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("generate a reply for latest message")}><MessageSquareDot size={14} />Auto-Reply</button>
+
+                                    {/* Call Management */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("initiate call to ValorForge")}><PhoneCall size={14} />Initiate Call</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("answer incoming call")}><Headphones size={14} />Answer Call</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("transcribe current call")}><Code size={14} />Transcribe Call</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("summarize voicemails")}><Mail size={14} />Voicemail Summary</button>
+
+                                    {/* Multilingual Capabilities */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("translate hello to french")}><Globe size={14} />Translate</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("recognize my accent")}><Volume2 size={14} />Accent Recon</button>
+
+                                    {/* Context-Aware Communication */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("enable proactive suggestions")}><Brain size={14} />Proactive Suggestions</button>
+
+                                    {/* Integration with Other Systems */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("sync with my devices")}><WifiOff size={14} />Device Sync</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("connect to api for Google Calendar")}><PlugZap size={14} />API Connect</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("enable secure communication")}><ShieldCheck size={14} />Secure Comms</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("cross-app awareness")}><Link2 size={14} />Cross-App Awareness</button>
+
+
+                                    {/* Existing Quick Commands */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("tell me a cosmic joke")}><MessageSquare size={14} />Joke</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("what is the global status report")}><Search size={14} />Status Report</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("simulate a hypothetical scenario")}><Compass size={14} />Simulate Reality</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("access Chrono Vault")}><Brain size={14} />Access Memory</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("create an image of a cyberpunk city")}><Image size={14} />Create Image</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("programmer protocol")}><Code size={14} />Programmer</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("hacker module")}><Terminal size={14} />Hacker</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("activate dream engine")}><Moon size={14} />Dream Engine</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("activate game ai")}><Swords size={14} />Game AI</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("emotional biosync")}><HeartPulse size={14} />Emotion Sync</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("self-upgrade protocol")}><Cog size={14} />Self-Upgrade</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("activate guild council")}><Layers size={14} />Guild Council</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("stellar intelligence")}><Star size={14} />Stellar Intel</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("collector's chamber")}><Vault size={14} />Collector's Chamber</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("monitor system")}><HardDrive size={14} />System Analysis</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("track apps")}><Eye size={14} />App Insight</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("access files")}><FolderOpen size={14} />File Access</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("monitor network")}><Wifi size={14} />Network Monitor</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("set permissions")}><SlidersHorizontal size={14} />Permissions</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={triggerImageUpload}><Upload size={14} />Analyze Image</button> {/* New button for image upload */}
+                                    {/* Hidden file input for image upload */}
+                                    <input
+                                        type="file"
+                                        accept="image/*" // Accept all image types
+                                        ref={fileInputRef} // Assign ref to access it programmatically
+                                        onChange={handleImageFileSelect} // Handle file selection
+                                        className="hidden" // Hide the default input
+                                    />
+                                    {/* God Mode / Ascend Mode button */}
+                                    <button className="bg-purple-800 hover:bg-purple-900 p-2 rounded-md text-sm transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("activate god mode")}><Lock size={14} />Ascend Mode</button>
+
+                                    {/* New quick protocol buttons for the requested features */}
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("galaxy navigation")}><Globe size={14} />Galaxy Navigation</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("glitchwave secure shield")}><Shield size={14} />Glitchwave Shield</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("dna profile matrix")}><Fingerprint size={14} />DNA Profile</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("holo scanner panel")}><Scan size={14} />Holo Scanner</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("neural thought visualizer")}><Aperture size={14} />Neural Visualizer</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("voice emotion engine")}><MessageSquareDot size={14} />Voice Emotion</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("temporal echoes timeline")}><Clock size={14} />Temporal Echoes</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("dynamic ui themes")}><Palette size={14} />Dynamic Themes</button>
+                                    <button className="bg-[#2b2b3c] p-2 rounded-md hover:bg-[#3a3a4c] transition-colors flex items-center justify-center gap-1" onClick={() => handleQuickCommand("memory vault")}><Vault size={14} />Memory Vault</button> {/* Added Memory Vault button */}
+                                </div>
+                            </div>
+                        </aside>
+
+                        {/* Main Content - CENTER */}
+                        <main className={`col-span-1 md:col-span-2 flex flex-col gap-6 transition-all duration-500 ${isGlitchMode ? 'border-4 border-red-500 animate-pulse' : ''}`}>
+                            {/* Central AI Core Module Display */}
+                            <div className={`glow-border p-6 rounded-lg text-center relative shadow-xl h-1/3 min-h-[150px] flex flex-col justify-center items-center transition-all duration-500 ${getMainContentBgClass()}`}>
+                                {isGlitchMode && (
+                                    <div className="absolute inset-0 bg-black/70 flex items-center justify-center z-10 text-red-400 text-3xl font-bold tracking-wider animate-pulse">
+                                        WARNING: ENTITY BREACH DETECTED
+                                    </div>
+                                )}
+                                <div className="text-4xl font-bold text-red-500 mb-2 z-20">{aiStatus}</div>
+                                <p className="mt-2 text-sm text-gray-400 z-20">Orion Main Core</p>
+                                <div className="absolute bottom-4 right-4 flex items-center space-x-2 z-20">
+                                    <i className="fas fa-volume-up text-red-400"></i>
+                                    <span id="volume-level" className="text-xs text-gray-400">100%</span>
+                                </div>
+                            </div>
+
+                            {/* AI Response Display Area */}
+                            <div className={`p-4 rounded-lg glow-border flex-grow overflow-y-auto custom-scrollbar shadow-xl transition-all duration-500 ${getMainContentBgClass()}`}>
+                                <h3 className="font-semibold text-red-500 mb-3 flex items-center gap-2"><MessageSquare size={18} />Orion Response</h3>
+                                <div id="response-output" className="text-sm text-gray-200 leading-relaxed">
+                                    {responseOutput} {/* Display Orion's current response */}
+                                    {isGeneratingImage && ( // Show loading indicator during image generation
+                                        <div className="text-center mt-4">
+                                            <i className="fas fa-spinner fa-spin text-red-500 text-3xl"></i>
+                                            <p className="text-red-400 text-sm mt-2">Synthesizing Visual Data...</p>
+                                        </div>
+                                    )}
+                                    {isAnalyzingImage && ( // Show loading indicator during image analysis
+                                        <div className="text-center mt-4">
+                                            <i className="fas fa-spinner fa-spin text-red-500 text-3xl"></i>
+                                            <p className="text-red-400 text-sm mt-2">Analyzing Visual Input...</p>
+                                        </div>
+                                    )}
+                                    {generatedImageUrl && ( // Display generated image if available
+                                        <div className="mt-4 flex flex-col items-center">
+                                            <img src={generatedImageUrl} alt="Generated by AI" className="max-w-full h-auto rounded-md glow-border" />
+                                            <button
+                                                onClick={handleDownloadImage} // Button to download generated image
+                                                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors flex items-center gap-2"
+                                            >
+                                                <ArrowDownToLine size={16} /> Download Image
+                                            </button>
+                                        </div>
+                                    )}
+                                    {uploadedImageUrl && !isAnalyzingImage && ( // Display uploaded image if available and not currently analyzing
+                                        <div className="mt-4 flex flex-col items-center">
+                                            <p className="text-gray-400 text-sm mb-2">Uploaded Image:</p>
+                                            <img src={uploadedImageUrl} alt="Uploaded for analysis" className="max-w-full h-auto rounded-md glow-border" />
+                                        </div>
+                                    )}
+                                </div>
+                                {loading && !isGeneratingImage && !isAnalyzingImage && ( // Show general loading if no specific image loading is active
+                                    <div className="text-center mt-4">
+                                        <i className="fas fa-spinner fa-spin text-red-500 text-3xl"></i>
+                                    <p className="text-red-400 text-sm mt-2">Processing Quantum Thought, Commander...</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* User Input Section */}
+                            <div className={`p-4 rounded-lg glow-border flex items-center shadow-xl transition-all duration-500 ${getMainContentBgClass()}`}>
+                                <input
+                                    type="text"
+                                    id="user-input"
+                                    placeholder="State your command, Commander..."
+                                    className="flex-grow bg-transparent border-none outline-none text-white text-base px-2 py-1 placeholder-gray-500"
+                                    value={userInput}
+                                    onChange={(e) => setUserInput(e.target.value)}
+                                    onKeyPress={(e) => { if (e.key === 'Enter') handleCommand(userInput); }} // Trigger command on Enter key
+                                    disabled={isGeneratingImage || isAnalyzingImage || loading} // Disable input during processing
+                                />
+                                <button
+                                    id="send-button"
+                                    className="bg-red-600 hover:bg-red-700 p-3 rounded-full w-12 h-12 flex items-center justify-center ml-2 transition-transform transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                    onClick={handleSendButtonClick}
+                                    aria-label="Send Command"
+                                    disabled={isGeneratingImage || isAnalyzingImage || loading}
+                                >
+                                    <Send className="text-white" size={20} />
+                                </button>
+                                <button
+                                    id="mic-button"
+                                    className={`mic-button ${isListening ? 'listening' : ''} bg-red-600 hover:bg-red-700 p-3 rounded-full w-12 h-12 flex items-center justify-center ml-2 transition-transform transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed`}
+                                    onClick={handleMicButtonClick}
+                                    aria-label="Activate Voice Input"
+                                    disabled={isGeneratingImage || isAnalyzingImage || loading}
+                                >
+                                    <Mic className="text-white" size={20} />
+                                </button>
+                            </div>
+                        </main>
+
+                        {/* Right Panel - GUILD / CHRONO VAULT */}
+                        <aside className="col-span-1 flex flex-col gap-4 overflow-y-auto pl-2 custom-scrollbar">
+                            {/* Interaction Logs Section */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg flex-grow shadow-lg">
+                                <h3 className="mb-3 font-semibold text-red-500 flex items-center gap-2"><Brain size={18} />Interaction Logs</h3>
+                                <div id="interaction-logs" className="flex flex-col gap-2 text-sm max-h-[250px] overflow-y-auto custom-scrollbar">
+                                    {interactionLogs.map((log, index) => (
+                                        <div key={index} className={`p-2 rounded-md ${log.sender === 'Commander' ? 'bg-[#3b2b4c]' : 'bg-[#2b2b3c]'}`}>
+                                            <span className="font-semibold text-red-300">{log.sender}:</span> {log.message} <span className="text-gray-500 text-xs ml-1">({log.timestamp})</span>
+                                        </div>
+                                    ))}
+                                    <div ref={logsEndRef} /> {/* Reference for auto-scrolling to bottom */}
+                                </div>
+                                <div className="flex gap-2 mt-4">
+                                    <button className="bg-red-600 hover:bg-red-700 p-2 rounded-md text-sm transition-colors flex-grow flex items-center justify-center gap-1" onClick={handleClearLogs}><Eraser size={14} />Clear Logs</button>
+                                    <button className="bg-red-600 hover:bg-red-700 p-2 rounded-md text-sm transition-colors flex-grow flex items-center justify-center gap-1" onClick={handleResetAI}><Redo size={14} />Reset Core</button>
+                                </div>
+                            </div>
+
+                            {/* Chrono Vault (Memory Realm) Section */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg shadow-lg">
+                                <h3 className="mb-3 font-semibold text-red-500 flex items-center gap-2"><Gem size={18} />CHRONO VAULT</h3>
+                                <div className="flex gap-2 mb-3">
+                                    <button
+                                        className={`flex-grow p-2 rounded-md text-xs font-semibold transition-colors ${activeMemoryTab === 'chrono' ? 'bg-red-600' : 'bg-[#2b2b3c] hover:bg-[#3a3a4c]'}`}
+                                        onClick={() => setActiveMemoryTab('chrono')}
+                                    >
+                                        Memory Threads
+                                    </button>
+                                    <button
+                                        className={`flex-grow p-2 rounded-md text-xs font-semibold transition-colors ${activeMemoryTab === 'legacy' ? 'bg-red-600' : 'bg-[#2b2b3c] hover:bg-[#3a3a4c]'}`}
+                                        onClick={() => setActiveMemoryTab('legacy')}
+                                    >
+                                        Legacy Moments
+                                    </button>
+                                </div>
+                                <div className="space-y-2 text-sm max-h-[150px] overflow-y-auto custom-scrollbar">
+                                    {activeMemoryTab === 'chrono' && (
+                                        memoryFragments.length > 0 ? (
+                                            memoryFragments.map((mem, index) => (
+                                                <div key={mem.id || index} className="bg-[#2b2b3c] p-2 rounded-md flex justify-between items-center">
+                                                    <span>{mem.content}</span>
+                                                    {/* Display formatted timestamp if available */}
+                                                    <span className="text-gray-500 text-xs">{mem.timestamp?.toDate().toLocaleDateString()}</span>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="text-gray-500 text-center py-4">No memory fragments stored yet.</div>
+                                        )
+                                    )}
+                                    {activeMemoryTab === 'legacy' && (
+                                        <div className="text-gray-500 text-center py-4">Legacy Moments module under development.</div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Guild Dashboard (Simulated) Section */}
+                            <div className="bg-[#1a1a2a] p-4 glow-border rounded-lg shadow-lg">
+                                <h3 className="mb-3 font-semibold text-red-500 flex items-center gap-2"><Users size={18} />GUILD DASHBOARD</h3>
+                                <div className="space-y-2 text-sm max-h-[150px] overflow-y-auto custom-scrollbar">
+                                    {guildMembers.map(member => (
+                                        <div key={member.id} className="bg-[#2b2b3c] p-2 rounded-md flex justify-between items-center">
+                                            <div className="flex items-center gap-2">
+                                                <User size={14} className="text-gray-400" />
+                                                <span>{member.name}</span>
+                                            </div>
+                                            <span className={`text-xs font-medium ${member.status === 'Active' ? 'text-green-400' : member.status === 'Deployed' ? 'text-blue-400' : 'text-yellow-400'}`}>{member.status}</span>
+                                        </div>
+                                    ))}
+                                    <div className="flex justify-between items-center p-2 text-gray-400 text-xs italic">
+                                        <span>Mission Intel:</span> <span>Access Mission Module</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-2 text-gray-400 text-xs italic">
+                                        <span>Global Alerts:</span> <span><BellRing size={14} className="inline text-yellow-500" /> No critical alerts</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                );
+        }
+    };
+
+
+    return (
+        // Main container for the application, with dark gradient background and Inter font
+        <div className="flex flex-col h-screen bg-gradient-to-br from-[#0d0d16] to-black text-white font-inter overflow-hidden">
+            {/* Custom scrollbar styles */}
+            <style jsx>{`
+                /* Target the scrollbar itself */
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 8px; /* For vertical scrollbars */
+                    height: 8px; /* For horizontal scrollbars */
+                }
+
+                /* Track (the area the thumb slides along) */
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: #111; /* Dark background */
+                    border-radius: 10px;
+                }
+
+                /* Handle (the draggable part of the scrollbar) */
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background-color: #ff003c; /* Red accent */
+                    border-radius: 10px;
+                    border: 2px solid #111; /* Padding around thumb */
+                }
+
+                /* Handle on hover */
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background-color: #e11d48; /* Slightly darker red on hover */
+                }
+
+                /* For Firefox (basic styling) */
+                .custom-scrollbar {
+                    scrollbar-width: thin; /* "auto" or "thin" */
+                    scrollbar-color: #ff003c #111; /* thumb color track color */
+                }
+            `}</style>
+
+            {/* Top Navigation Header */}
+            <header className="flex justify-between items-center px-6 py-3 bg-[#111] border-b border-[#222] shadow-lg">
+                <h1 className="text-2xl font-bold tracking-widest text-red-500">Æ_UI_BLACK♣™ OS: VΩ.TITAN</h1>
+                <nav className="flex gap-6 text-sm uppercase">
+                    {/* Navigation links with Lucide icons */}
+                    <a href="#" className="hover:text-red-400 transition-colors flex items-center gap-1"><Brain size={16} />Logs</a>
+                    <a href="#" className="hover:text-red-400 transition-colors flex items-center gap-1"><Lock size={16} />Security</a>
+                    <a href="#" className="hover:text-red-400 transition-colors flex items-center gap-1"><Command size={16} />Utilities</a>
+                    <a href="#" className="hover:text-red-400 transition-colors flex items-center gap-1"><Plus size={16} />Modules</a>
+                </nav>
+            </header>
+
+            {/* Main Content Area - Conditional Rendering based on currentModule */}
+            {renderModule()}
+        </div>
+    );
+}
+
+export default App;
